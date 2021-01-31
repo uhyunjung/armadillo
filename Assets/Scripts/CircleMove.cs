@@ -86,7 +86,7 @@ public class CircleMove : MonoBehaviour
         {
             for (int i = 1; i < bulletUnit.transform.childCount + 1; i++)
             {
-                if ((bulletUnit.transform.GetChild(i).gameObject.transform.position.x > Screen.width) || (bulletUnit.transform.GetChild(i).gameObject.transform.position.x < -Screen.width) || (bulletUnit.transform.GetChild(i).gameObject.transform.position.y > Screen.height) || (bulletUnit.transform.GetChild(i).gameObject.transform.position.y < -Screen.height))
+                if ((bulletUnit.transform.GetChild(i).gameObject.transform.position.x > Screen.width / 200) || (bulletUnit.transform.GetChild(i).gameObject.transform.position.x < -Screen.width / 200) || (bulletUnit.transform.GetChild(i).gameObject.transform.position.y > Screen.height / 200) || (bulletUnit.transform.GetChild(i).gameObject.transform.position.y < -Screen.height / 200))
                 {
                     Destroy(bulletUnit.transform.GetChild(i).gameObject);
                     count++;
