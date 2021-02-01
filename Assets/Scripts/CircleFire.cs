@@ -114,7 +114,7 @@ public class CircleFire : MonoBehaviour
         // 원형 탄막 스프라이트
         circleSprite[n] = shot[n].GetComponent<SpriteRenderer>();
         circleColor[n] = circleSprite[n].color;
-        scale[n] = new Vector3(1f, 1f, 1f);            // 0.1cm 바꾸기
+        scale[n] = new Vector3(0.1f, 0.1f, 1f);
         shot[n].transform.localScale = scale[n];
         
         yield return new WaitForSeconds(1);
@@ -122,10 +122,10 @@ public class CircleFire : MonoBehaviour
         shot[n].SetActive(true);
 
         // 원형 탄막 유닛 스프라이트 크기 조절
-        while (scale[n].x < 3f)                       // 1.5cm 바꾸기
+        while (scale[n].x < 1.5f)
         {
-            scale[n].x += Time.deltaTime * 1.5f;
-            scale[n].y += Time.deltaTime * 1.5f;
+            scale[n].x += Time.deltaTime * 1f;
+            scale[n].y += Time.deltaTime * 1f;
             shot[n].transform.localScale = scale[n];
 
             // 1초에 3번 깜빡이기                    // 시간 확인
@@ -146,7 +146,7 @@ public class CircleFire : MonoBehaviour
                     circleBullet[i] = (GameObject)Instantiate(shot[n].transform.GetChild((int)Random.Range(0, 3)).gameObject, mouseLocation[n], Quaternion.identity);
                     circleBullet[i].transform.SetParent(shot[n].transform);
                     circleBullet[i].SetActive(false);
-                    circleBullet[i].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f); // 소품 크기
+                    circleBullet[i].transform.localScale = new Vector3(0.2f, 0.2f, 1f); // 소품 크기
                 }
                 isMake[n] = true;
                 number.Enqueue(n);
