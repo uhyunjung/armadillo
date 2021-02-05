@@ -9,6 +9,11 @@ TagManager:
   - fillarea
   - bullet
   - hpslider
+  - BulletUnit1
+  - ampLeft
+  - ampRight
+  - skillRangeR
+  - skillRangeL
   layers:
   - Default
   - TransparentFX
