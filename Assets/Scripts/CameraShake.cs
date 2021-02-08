@@ -4,44 +4,44 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    BulletBtn bulletBtn;  // 탄막 버튼 스크립트
-    int selectNum;  // 탄막 선택 번호
+
+    public Camera mainCamera;
+
     public float ShakeAmount;
     public float ShakeTime;
     Vector3 initialPosition;
+    Vector3 cameraPos;
+
+
+    [SerializeField] [Range(0.01f, 0.1f)] float shakeRange = 0.05f;
 
     public void VibrateForTime(float time)
     {
         ShakeTime = time;
     }
 
+    public void Shake()
+    {
+
+        float cameraPosX = Random.value * shakeRange * 2 - shakeRange;
+        float cameraPosY = Random.value * shakeRange * 2 - shakeRange;
+        Vector3 cameraPos = mainCamera.transform.position;
+        cameraPos.x += cameraPosX;
+        cameraPos.y += cameraPosY;
+        mainCamera.transform.position = cameraPos;
+        ShakeTime -= Time.deltaTime;
+    }
+
+    public void cameraReset()
+    {
+        mainCamera.transform.position = initialPosition;
+    }
+
     private void Start()
     {
-        bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        
         initialPosition = new Vector3(0f, 0f, -10f);
+        cameraPos = mainCamera.transform.position;
     }
 
-    private void Update()
-    {
-        selectNum = bulletBtn.num;  // 탄막 선택 번호
 
-        if (Input.GetMouseButtonDown(0)&&selectNum==1)
-        {
-            while (ShakeTime >0)
-            {
-                if (ShakeTime > 0)
-                {
-                    transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
-                    ShakeTime -= Time.deltaTime;
-                }
-                else
-                {
-                    ShakeTime = 0.0f;
-                    transform.position = initialPosition;
-                }
-            }
-            
-        }
-    }
 }

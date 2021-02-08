@@ -5,7 +5,7 @@ using UnityEngine;
 public class LaserRotation : MonoBehaviour
 {
     BulletBtn bulletBtn;  // 탄막 버튼 스크립트
-    
+
     float angle;
     float stopAngle;
     bool check = true;
@@ -17,7 +17,7 @@ public class LaserRotation : MonoBehaviour
     private void Start()
     {
         bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        
+
         target = transform.position;
     }
     private void Update()
@@ -60,6 +60,7 @@ public class LaserRotation : MonoBehaviour
         while (cool > 0.0f)
         {
             cool -= Time.deltaTime;
+            GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
             yield return null;
         }
         check = true;
