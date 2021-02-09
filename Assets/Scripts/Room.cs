@@ -256,12 +256,12 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    // 뒤로가기(로비 이동) 바꿔야 됨
+    // 뒤로가기(로비 이동) 
     public void Back()
     {
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.Disconnect();
-        SceneManager.LoadScene("Start Scene");
+        SceneManager.LoadScene("Lobby Scene");
     }
 
     // 카운트다운 시간, Ready한 인원 동기화
