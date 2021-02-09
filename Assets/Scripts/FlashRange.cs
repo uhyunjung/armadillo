@@ -36,13 +36,10 @@ public class FlashRange : MonoBehaviour
                 rangesr.color = tempColor;                  // 증가시킨 알파값 적용
 
                 if (tempColor.a >= 0.5f) tempColor.a = 0.5f;
-
-                GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
                 yield return null;
             }
             rangesr.color = tempColor;
             tempColor.a = 0f;                       //스킬범위 투명화
-            GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
             rangesr.color = tempColor;
             flashcount++;
             yield return new WaitForSeconds(5);
