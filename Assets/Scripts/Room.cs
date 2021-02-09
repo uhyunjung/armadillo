@@ -12,6 +12,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
 {
     public PhotonView pv;       // 룸매니저 포톤뷰       
     int num = 5;                // 사용자 인원
+    int bossnum = 0;            //보스 유저 번호
     bool[] playerList;          // 해당 위치에 아르마딜로 존재하는지 확인
 
     public Text msg;            // 게임 대기, 시작 안내 메시지
@@ -109,7 +110,6 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                 break;
             }
         }
-
         yield return null;
     }
 
@@ -231,7 +231,17 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                         }
                     }
                 }
-
+                while (true)
+                {
+                    bossnum = UnityEngine.Random.Range(0, 4); //번호 랜덤 선택
+                    if (playerList[bossnum]) //플레이어가 할당되어 있으면 보스 할당
+                    { 
+                        PhotonNetwork.Instantiate("BossPrefab", playerPos[bossnum], Quaternion.identity, 0);
+                        break;
+                    }
+                    else //없을 시 반복문 시작
+                        continue;
+                }
                 // 카운트다운 후 게임 씬 이동
                 if (time < 0)
                 {
