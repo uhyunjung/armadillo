@@ -9,28 +9,24 @@ using UnityEngine.SceneManagement;
 // 마스터(매치 메이킹) 서버와 룸 접속을 담당
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    private string gameVersion = "1"; // 게임 버전
-
     public InputField roomInput; // 룸 이름 입력받는 영역
     public Text connectionInfoText; // 네트워크 정보를 표시할 텍스트
 
     public Button back; // 뒤로 버튼
-    public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
+    //public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
     public Button joinNewRoomButton; //룸 접속 버튼(새로 만든 방)
 
     public GameObject room; 
-    public Transform gridTr; 
+    public Transform gridTr;
 
     // 게임 실행과 동시에 마스터 서버 접속 시도
     private void Start()
     {
-        // 접속에 필요한 정보(게임 버전) 설정
-        PhotonNetwork.GameVersion = gameVersion;
-        // 설정한 정보를 가지고 마스터 서버 접속 시도
+        // 마스터 서버 접속 시도
         PhotonNetwork.ConnectUsingSettings();
 
         // 룸 접속 버튼을 잠시 비활성화
-        joinButton.interactable = false;
+        //joinButton.interactable = false;
         joinNewRoomButton.interactable = false;
 
         // 접속을 시도 중임을 텍스트로 표시
@@ -41,7 +37,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         // 룸 접속 버튼을 활성화
-        joinButton.interactable = true;
+        //joinButton.interactable = true;
         joinNewRoomButton.interactable = true;
 
         // 접속 정보 표시
@@ -55,7 +51,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 룸 접속 버튼을 비활성화
-        joinButton.interactable = false;
+        //joinButton.interactable = false;
         joinNewRoomButton.interactable = false;
 
         // 접속 정보 표시
@@ -71,7 +67,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         connectionInfoText.text = "로비에 참가됨";
     }
 
-    //룸 리스트 보여주기 및 이미 만들어진 방에 참가
+    //룸 리스트 보여주기
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Room"))
@@ -86,17 +82,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             roomData.maxPlayer = roomInfo.MaxPlayers;
             roomData.playerCount = roomInfo.PlayerCount;
             roomData.UpdateInfo();
+
             roomData.GetComponent<Button>().onClick.AddListener
             (
                 delegate
                 {
-                    OnClickRoom(roomData.roomName);
+                    OnClickRoom(roomData.roomName); //선택한 방에 참가
                 }
             );
 
         }
     }
 
+    //선택한 방에 참가
     void OnClickRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName, null);
@@ -137,12 +135,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void OnBackClick()
     {
         SceneManager.LoadScene("Start Scene");
-    }
-
-    // 룸으로 이동
-    public void OnRoomClick()
-    {
-        SceneManager.LoadScene("Room Scene");
     }
 
 }
