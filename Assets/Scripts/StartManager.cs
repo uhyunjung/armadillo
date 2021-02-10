@@ -10,10 +10,10 @@ public class StartManager : MonoBehaviour
     public Button setting;
     public Button finish;
 
-    // 로비 이동(바꿔야 됨)
+    // 로비 이동
     public void OnStartClick()
     {
-        SceneManager.LoadScene("Room Scene");
+        SceneManager.LoadScene("Lobby Scene");
     }
 
     // 환경설정 이동
