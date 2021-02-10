@@ -7,12 +7,13 @@ public class CameraShake : MonoBehaviour
 
     public Camera mainCamera;
 
+    public float ShakeAmount;
     public float ShakeTime;
     Vector3 initialPosition;
     Vector3 cameraPos;
 
 
-    [SerializeField] [Range(0.01f, 0.1f)] float shakeRange = 0.01f;
+    [SerializeField] [Range(0.01f, 0.1f)] float shakeRange = 0.05f;
 
     public void VibrateForTime(float time)
     {
