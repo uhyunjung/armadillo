@@ -34,7 +34,7 @@ public class DashMove : MonoBehaviour
     //hp바, fill area 조절
     public Slider HpBar;
     public GameObject fillArea;
-
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,6 +53,16 @@ public class DashMove : MonoBehaviour
 
     void Update()
     {
+        // 보스일 경우, 플레이어 삭제
+        if (pv.OwnerActorNr == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        {
+            pv.RPC("BossOnOff", RpcTarget.All, false); // 게임 끝난 후 룸 이동할 때 켜야 함
+        }
+        else
+        {
+            pv.RPC("BossOnOff", RpcTarget.All, true);
+        }
+
         if (pv.IsMine)
         {
             if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
@@ -138,6 +148,13 @@ public class DashMove : MonoBehaviour
     }
 
     [PunRPC]
+    void BossOnOff(bool value)
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = value;
+        transform.GetChild(0).gameObject.SetActive(value);
+    }
+
+    [PunRPC]
     void StartDash()
     {
         StartCoroutine("DashDelay"); //대시 딜레이
@@ -153,16 +170,15 @@ public class DashMove : MonoBehaviour
     void Die()
     {
         isDie = true;
-        HpBar.gameObject.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     [PunRPC]
-    void IsTrigger(Collider2D collision)
+    void IsTrigger()
     {
         beShot = true; //탄환과 충돌
 
-        if (collision.CompareTag("bullet") && isUnBeatTime == false) //탄환과 만났고, 무적타임이 아닐 시
+        if (isUnBeatTime == false) //탄환과 만났고, 무적타임이 아닐 시
         {
             Debug.Log("탄환 피격");
 
@@ -179,7 +195,16 @@ public class DashMove : MonoBehaviour
     //탄환과 충돌 판정
     void OnTriggerEnter2D(Collider2D collision)
     {
-        pv.RPC("IsTrigger", RpcTarget.All, collision);
+        if (pv.OwnerActorNr != GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        {
+            if (collision.CompareTag("bullet"))
+            {
+                if (pv.IsMine)
+                {
+                    pv.RPC("IsTrigger", RpcTarget.All);
+                }
+            }
+        }
     }
 
     //대쉬 딜레이
