@@ -6,50 +6,36 @@ using UnityEngine.UI;
 public class TimeSpeed : MonoBehaviour
 {
 
-    /*
-        스킬 3번 제어 코드입니다.
-        화면 내의 감속/배속 스프라이트 제어와 감속/배속 기능이 작성되어있습니다.
-    */
-
     public Sprite FastSprite;       //배속 sprite
     public Sprite SlowSprite;       //감속 sprite
-    public Sprite normalSprite;     //보통 sprite(None으로 두면 됩니다.) 
-    BulletBtn bulletBtn;            // 탄막 버튼 스크립트
+    public Sprite normalSprite;     //보통 sprite
+    BulletBtn bulletBtn;  // 탄막 버튼 스크립트
 
     bool check = true;
     int selectMode = 0;
 
     Controller_Time ct;
     SpriteRenderer spriteRenderer;
-
     void Start()
     {
         bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        ct = GameObject.Find("TimeController").GetComponent<Controller_Time>();         //배속, 감속 플래그
-        spriteRenderer = GetComponent<SpriteRenderer>();                                //스프라이트 제어용
+        ct = GameObject.Find("TimeController").GetComponent<Controller_Time>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
-    void Update()
+    void update()
     {
         if (Input.GetMouseButtonDown(0) && bulletBtn.num == 2 && check)
         {
             selectMode = Random.Range(1, 3);    //랜덤으로 1 혹은 2의 정수 생성
             startMode();
         }
-
-        else if (bulletBtn.num != 2)
-        {
-            spriteRenderer.sprite = normalSprite;
-        }
     }
 
-    
     void modeReset()
-    {   
-        //감속, 배속 종료 후 1배속으로 초기화하는 함수
+    {
         spriteRenderer.sprite = normalSprite;
-        selectMode = 0;
         Time.timeScale = 1.0f;
         ct.isFastSpeed = false;
         ct.isSlowSpeed = false;
@@ -60,8 +46,6 @@ public class TimeSpeed : MonoBehaviour
 
     void fastslow(int selectMode)
     {
-        //배속 감속 함수
-
         // 2배속
         if (selectMode == 1)
         {
@@ -69,7 +53,7 @@ public class TimeSpeed : MonoBehaviour
             Time.timeScale = 2f;
             spriteRenderer.sprite = FastSprite;
         }
-        // 0.75배속
+        // 1배속
         else if (selectMode == 2)
         {
             ct.isSlowSpeed = true;
@@ -85,7 +69,6 @@ public class TimeSpeed : MonoBehaviour
 
     IEnumerator Cooltime(float cool)
     {
-        //지속시간 코루틴
         check = false;
         while (cool > 0.0f)
         {
