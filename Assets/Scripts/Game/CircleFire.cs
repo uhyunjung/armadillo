@@ -36,7 +36,7 @@ public class CircleFire : MonoBehaviour
         // 스킬 범위 투명도 조절
         while (skillColor.a < 0.5f)
         {
-            skillColor.a += Time.deltaTime * 0.5f;
+            skillColor.a += Time.deltaTime * 0.4f;
             skillSprite.color = skillColor;
             yield return null;
         }
