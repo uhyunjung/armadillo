@@ -98,6 +98,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pv: {fileID: 1453587641488092521}
   circleBulletNum: 8
+  circlePrefab:
+  - {fileID: 4391334515375948405, guid: 02eaed3fa3c8bb9498dbd99be77fedee, type: 3}
+  - {fileID: 2257260218320713125, guid: 0ff5aa8ac97f6964c8565a8b3811fcb9, type: 3}
+  - {fileID: 979011329637409878, guid: 6ff624bb7eff50545ada1dd487861e38, type: 3}
 --- !u!114 &1453587641488092521
 MonoBehaviour:
   m_ObjectHideFlags: 0

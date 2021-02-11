@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0FA6042D-2BD8-32FC-1119-F386EAC92FF4}</ProjectGuid>
+    <ProjectGuid>{73F9C012-C243-B852-EC89-9A0C3D2D75BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -78,31 +78,33 @@
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
-    <Compile Include="Assets\Scripts\ArmManager.cs" />
-    <Compile Include="Assets\Scripts\BulletBtn.cs" />
-    <Compile Include="Assets\Scripts\CameraShake.cs" />
-    <Compile Include="Assets\Scripts\CircleFire.cs" />
-    <Compile Include="Assets\Scripts\CircleMouse.cs" />
-    <Compile Include="Assets\Scripts\CircleMove.cs" />
-    <Compile Include="Assets\Scripts\Controller_Time.cs" />
     <Compile Include="Assets\Scripts\CursorManager.cs" />
-    <Compile Include="Assets\Scripts\DashMove.cs" />
-    <Compile Include="Assets\Scripts\FlashRange.cs" />
-    <Compile Include="Assets\Scripts\LaserRotation.cs" />
-    <Compile Include="Assets\Scripts\ReadyBtn.cs" />
-    <Compile Include="Assets\Scripts\ReadyClick.cs" />
-    <Compile Include="Assets\Scripts\Room.cs" />
-    <Compile Include="Assets\Scripts\SLRange.cs" />
-    <Compile Include="Assets\Scripts\SLRotate.cs" />
+    <Compile Include="Assets\Scripts\Game\ArmManager.cs" />
+    <Compile Include="Assets\Scripts\Game\BulletBtn.cs" />
+    <Compile Include="Assets\Scripts\Game\CameraShake.cs" />
+    <Compile Include="Assets\Scripts\Game\CircleFire.cs" />
+    <Compile Include="Assets\Scripts\Game\CircleMouse.cs" />
+    <Compile Include="Assets\Scripts\Game\CircleMove.cs" />
+    <Compile Include="Assets\Scripts\Game\Controller_Time.cs" />
+    <Compile Include="Assets\Scripts\Game\DashMove.cs" />
+    <Compile Include="Assets\Scripts\Game\FlashRange.cs" />
+    <Compile Include="Assets\Scripts\Game\LaserRotation.cs" />
+    <Compile Include="Assets\Scripts\Game\SLRange.cs" />
+    <Compile Include="Assets\Scripts\Game\SLRotate.cs" />
+    <Compile Include="Assets\Scripts\Game\StageLight.cs" />
+    <Compile Include="Assets\Scripts\Game\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\Game\TimeSpeed.cs" />
+    <Compile Include="Assets\Scripts\Game\TotalSLRange.cs" />
+    <Compile Include="Assets\Scripts\Game\left_move.cs" />
+    <Compile Include="Assets\Scripts\Game\right_move.cs" />
+    <Compile Include="Assets\Scripts\Lobby\LobbyManager.cs" />
+    <Compile Include="Assets\Scripts\Lobby\RoomData.cs" />
+    <Compile Include="Assets\Scripts\Room\ReadyBtn.cs" />
+    <Compile Include="Assets\Scripts\Room\ReadyClick.cs" />
+    <Compile Include="Assets\Scripts\Room\Room.cs" />
+    <Compile Include="Assets\Scripts\Room\playerMatch.cs" />
     <Compile Include="Assets\Scripts\SceneMoveManage.cs" />
-    <Compile Include="Assets\Scripts\StageLight.cs" />
     <Compile Include="Assets\Scripts\StartManager.cs" />
-    <Compile Include="Assets\Scripts\TimeManager.cs" />
-    <Compile Include="Assets\Scripts\TimeSpeed.cs" />
-    <Compile Include="Assets\Scripts\TotalSLRange.cs" />
-    <Compile Include="Assets\Scripts\left_move.cs" />
-    <Compile Include="Assets\Scripts\playerMatch.cs" />
-    <Compile Include="Assets\Scripts\right_move.cs" />
     <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
     <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
     <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
@@ -293,13 +295,13 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -647,126 +649,126 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Runtime">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Path.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Psdimporter.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.001">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Runtime">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
-      <Project>{68D86237-708C-9841-65FA-88CBD35854B9}</Project>
+      <Project>{BDCF4FC3-146F-7455-B870-5DB0DA6AF8B6}</Project>
       <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
-      <Project>{8A353481-F38B-DDB1-7013-60B1F850E625}</Project>
+      <Project>{BDB0F517-FD5F-2D13-D575-47C7EC0EB085}</Project>
       <Name>PunDemos.DemoHubEditor</Name>
     </ProjectReference>
     <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
-      <Project>{951C4E89-77B3-2D7F-0F61-8A39C8A1E872}</Project>
+      <Project>{44F81B60-35C3-1CC3-2F99-1E5D33EEBDF1}</Project>
       <Name>PunDemos.DemoSlotcarEditor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
-      <Project>{2634E80D-C46C-E44C-E2F8-5977A372DC9E}</Project>
+      <Project>{2CFFFCDA-0B09-EB23-22DD-ACF6B577B339}</Project>
       <Name>PhotonUnityNetworking.Demos</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{B1889A30-F8D1-6CE3-A034-B0E13ED7C5C2}</Project>
+      <Project>{D884ED05-5809-E895-E4FD-9AC9819178CB}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{6338AB3A-409E-64F2-2707-55EF49AE1BE4}</Project>
+      <Project>{C74F21CD-FA37-44AF-B691-CC4611E04141}</Project>
       <Name>PhotonRealtime</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{0E37E800-CA52-5247-3234-FA3AA648F4B7}</Project>
+      <Project>{ED8ED614-A236-1126-CEE2-5F86D439CF45}</Project>
       <Name>PhotonUnityNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonChat.csproj">
-      <Project>{0F77003B-2F2B-349C-1795-7F268B2F251C}</Project>
+      <Project>{FFDCA75E-8784-C4AE-84E7-BD7D51C1472A}</Project>
       <Name>PhotonChat</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
-      <Project>{FAA48517-E701-7C47-1394-86C31DCE6623}</Project>
+      <Project>{102423F9-23B2-6B45-028A-0562FEEE2CEE}</Project>
       <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
-      <Project>{03EA36C5-DC38-A139-1572-B42C7F795E47}</Project>
+      <Project>{55656541-3BA9-A9C6-C2B7-CCE5A4767154}</Project>
       <Name>PhotonUnityNetworking.Editor</Name>
     </ProjectReference>
   </ItemGroup>

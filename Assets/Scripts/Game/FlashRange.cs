@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class FlashRange : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class FlashRange : MonoBehaviour
     * 스테이지 조명의 '조명 부분'의 점멸 범위 스프라이트를 제어하는 코드
     */
 
-    BulletBtn bulletBtn;
     private bool check = true;                      // 중복 입력 방지를 위한 플래그
     SpriteRenderer rangesr;
 
@@ -46,12 +46,6 @@ public class FlashRange : MonoBehaviour
         }
         yield return new WaitForSeconds(1);         // 1초 delay
         check = true;                               // 플래그를 true로 전환
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
     }
 
     void OnEnable()                                 // 스킬이 활성화 될 때

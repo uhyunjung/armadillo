@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
+// 탄막 2번
 public class SLRange : MonoBehaviour
 {
     BulletBtn bulletBtn;  // 탄막 버튼 스크립트
+    public PhotonView pv;
 
     private bool check = true;
     public float timer;
@@ -15,6 +18,7 @@ public class SLRange : MonoBehaviour
     //public GameObject SLRng;
     // private bool state;          추후에 다른 스킬들이 추가될 경우, 스킬의 발동 상태를 표시하기 위한 플래그 변수(중복 체크용)
 
+    [PunRPC]
     public void FadeIn(float fadeOutTime)
     {
         StartCoroutine(CoFadeIn(fadeOutTime));
@@ -36,31 +40,35 @@ public class SLRange : MonoBehaviour
         }
 
         rangesr.color = tempColor;
+        this.transform.rotation = new Quaternion(0, 0, 0, 0);
         check = true;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        {
+            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+        }
 
         timer = 0.0F;
         waitingTime = 2;
         //SLRng = GameObject.Find("StageLightRange");
     }
 
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
+        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
         {
-            FadeIn(2f);
-            timer += Time.deltaTime;
-            if (timer > waitingTime)
+            if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
             {
-                //Action
-                //SLRng.SetActive(false);
+                pv.RPC("FadeIn", RpcTarget.All, 2f);
+                timer += Time.deltaTime;
+                if (timer > waitingTime)
+                {
+                    //Action
+                    //SLRng.SetActive(false);
+                }
             }
         }
 

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2634E80D-C46C-E44C-E2F8-5977A372DC9E}</ProjectGuid>
+    <ProjectGuid>{2CFFFCDA-0B09-EB23-22DD-ACF6B577B339}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>PhotonUnityNetworking.Demos</AssemblyName>
@@ -367,13 +367,13 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -721,23 +721,23 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo전/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/yhyeo/OneDrive/바탕 화면/아르마딜로/armadillo/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{6338AB3A-409E-64F2-2707-55EF49AE1BE4}</Project>
+      <Project>{C74F21CD-FA37-44AF-B691-CC4611E04141}</Project>
       <Name>PhotonRealtime</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{0E37E800-CA52-5247-3234-FA3AA648F4B7}</Project>
+      <Project>{ED8ED614-A236-1126-CEE2-5F86D439CF45}</Project>
       <Name>PhotonUnityNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{B1889A30-F8D1-6CE3-A034-B0E13ED7C5C2}</Project>
+      <Project>{D884ED05-5809-E895-E4FD-9AC9819178CB}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
