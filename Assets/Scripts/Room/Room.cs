@@ -47,7 +47,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     // 방에 접속하면 플레이어 생성
-    public override void OnJoinedRoom()
+    public void Start()
     {
         StartCoroutine("CreatePlayer");
     }

@@ -103,23 +103,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //새로운 방을 만든 후 참가
     public void OnCreateRoomClick()
     {
-        // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
-        joinNewRoomButton.interactable = false;
+        if (roomInput.text == string.Empty) //방 이름이 입력되지 않은 경우
+        {
+            connectionInfoText.text = "방 이름을 입력하세요!";
+        }
+        else //방 이름이 입력된 경우
+        {
+            // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
+            joinNewRoomButton.interactable = false; 
 
-        // 마스터 서버에 접속중이라면
-        if (PhotonNetwork.IsConnected)
-        {
-            // 룸 접속 실행
-            connectionInfoText.text = "룸에 접속중...";
-            PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 5 }, null);
+            // 마스터 서버에 접속중이라면
+            if (PhotonNetwork.IsConnected)
+            {
+                // 룸 접속 실행
+                connectionInfoText.text = "룸에 접속중...";
+                PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 5 }, null);
+            }
+            else
+            {
+                // 마스터 서버에 접속중이 아니라면, 마스터 서버에 접속 시도
+                connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
+                // 마스터 서버로의 재접속 시도
+                PhotonNetwork.ConnectUsingSettings();
+            }
         }
-        else
-        {
-            // 마스터 서버에 접속중이 아니라면, 마스터 서버에 접속 시도
-            connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
-            // 마스터 서버로의 재접속 시도
-            PhotonNetwork.ConnectUsingSettings();
-        }
+
     }
 
     // 룸에 참가 완료된 경우 자동 실행
