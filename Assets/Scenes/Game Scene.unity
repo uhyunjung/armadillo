@@ -2440,13 +2440,15 @@ GameObject:
   - component: {fileID: 771605714}
   - component: {fileID: 771605713}
   - component: {fileID: 771605716}
+  - component: {fileID: 771605718}
+  - component: {fileID: 771605717}
   m_Layer: 0
   m_Name: ampRightArm
   m_TagString: ampRight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &771605713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,6 +2461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b2493d54616484ab381848db77bc7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pv: {fileID: 771605717}
   prefab:
   - {fileID: 1028138070268352681, guid: 613a17f87d0b6fa4a8c6ffbc75b4af8a, type: 3}
   - {fileID: 6879156071934049854, guid: 0da8885ffe2e0db4c87884754ce27289, type: 3}
@@ -2654,6 +2657,45 @@ PolygonCollider2D:
       - {x: 2.065, y: -4.245}
       - {x: 2.065, y: 0.255}
       - {x: 2.055, y: 0.285}
+--- !u!114 &771605717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771605712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 0
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 771605718}
+  viewIdField: 13
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &771605718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771605712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &825480372
 GameObject:
   m_ObjectHideFlags: 0
@@ -4281,13 +4323,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1623933403}
   - component: {fileID: 1623933402}
+  - component: {fileID: 1623933405}
+  - component: {fileID: 1623933404}
   m_Layer: 0
   m_Name: skillRangeR
   m_TagString: skillRangeR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1623933402
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4352,6 +4396,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1623933404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623933401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 1623933405}
+  viewIdField: 16
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1623933405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623933401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1692980684
 GameObject:
   m_ObjectHideFlags: 0
@@ -4397,6 +4480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mousePosition: {x: 0, y: 0, z: 0}
+  cnt: 0
   skillRange: {fileID: 0}
 --- !u!212 &1692980687
 SpriteRenderer:
@@ -4844,13 +4928,15 @@ GameObject:
   - component: {fileID: 1838499516}
   - component: {fileID: 1838499515}
   - component: {fileID: 1838499518}
+  - component: {fileID: 1838499520}
+  - component: {fileID: 1838499519}
   m_Layer: 0
   m_Name: ampLeftArm
   m_TagString: ampLeft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1838499515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4863,6 +4949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344fc237ecace7d458d9fbcce00db814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pv: {fileID: 1838499519}
   prefab:
   - {fileID: 1028138070268352681, guid: 613a17f87d0b6fa4a8c6ffbc75b4af8a, type: 3}
   - {fileID: 6879156071934049854, guid: 0da8885ffe2e0db4c87884754ce27289, type: 3}
@@ -5078,6 +5165,45 @@ PolygonCollider2D:
       - {x: -1.6999999, y: -4.22}
       - {x: -1.61, y: -4.2}
       - {x: -1.5899999, y: -4.15}
+--- !u!114 &1838499519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838499514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 1838499520}
+  viewIdField: 14
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1838499520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838499514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1964652789
 GameObject:
   m_ObjectHideFlags: 0
@@ -6059,13 +6185,15 @@ GameObject:
   m_Component:
   - component: {fileID: 2064743830}
   - component: {fileID: 2064743829}
+  - component: {fileID: 2064743832}
+  - component: {fileID: 2064743831}
   m_Layer: 0
   m_Name: skillRangeL
   m_TagString: skillRangeL
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &2064743829
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6130,6 +6258,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2064743831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064743828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 2064743832}
+  viewIdField: 15
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2064743832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064743828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2067155616
 GameObject:
   m_ObjectHideFlags: 0

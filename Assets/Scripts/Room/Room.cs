@@ -24,7 +24,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     Vector3[] readyPos;         // Ready 텍스트 위치 저장
 
     int cnt;                    // Ready한 사용자 수
-    int readyCnt=1;             // 게임 시작 인원 조건 3명
+    int readyCnt=3;             // 게임 시작 인원 조건 3명
     float time;                 // 카운트다운 5초
     
     public void Awake()
