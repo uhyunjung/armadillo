@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Text connectionInfoText; // 네트워크 정보를 표시할 텍스트
 
     public Button back; // 뒤로 버튼
-    //public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
+    public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
     public Button joinNewRoomButton; //룸 접속 버튼(새로 만든 방)
 
     public GameObject room; 
@@ -26,7 +26,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
         // 룸 접속 버튼을 잠시 비활성화
-        //joinButton.interactable = false;
+        joinButton.interactable = false;
         joinNewRoomButton.interactable = false;
 
         // 접속을 시도 중임을 텍스트로 표시
@@ -37,7 +37,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         // 룸 접속 버튼을 활성화
-        //joinButton.interactable = true;
+        joinButton.interactable = true;
         joinNewRoomButton.interactable = true;
 
         // 접속 정보 표시
@@ -51,7 +51,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 룸 접속 버튼을 비활성화
-        //joinButton.interactable = false;
+        joinButton.interactable = false;
         joinNewRoomButton.interactable = false;
 
         // 접속 정보 표시
@@ -83,7 +83,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             roomData.playerCount = roomInfo.PlayerCount;
             roomData.UpdateInfo();
 
-            roomData.GetComponent<Button>().onClick.AddListener
+            roomData.GetComponentInChildren<Button>().onClick.AddListener
             (
                 delegate
                 {
@@ -134,6 +134,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 타이틀 화면으로 이동
     public void OnBackClick()
     {
+        PhotonNetwork.Disconnect();
+        connectionInfoText.text = "서버 연결 끊김";
         SceneManager.LoadScene("Start Scene");
     }
 

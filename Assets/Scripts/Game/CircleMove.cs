@@ -15,6 +15,7 @@ public class CircleMove : MonoBehaviour
     GameObject circleBullet;           // 작은 소품 오브젝트
     GameObject circleUnit;
     public int circleBulletNum=8;          // 작은 소품 개수(8개)
+    public GameObject[] circlePrefab;
 
     GameObject temp;                                                    // 탄막 유닛 삭제
     SpriteRenderer[] bulletSprite;                                      // 투명도 조절 스프라이트
@@ -35,7 +36,6 @@ public class CircleMove : MonoBehaviour
     void Start()
     {
         bulletSprite = new SpriteRenderer[circleBulletNum];
-
         pv.RPC("startBullet", RpcTarget.All);
     }
 
@@ -57,8 +57,8 @@ public class CircleMove : MonoBehaviour
         // 원형 탄막 유닛 스프라이트 크기 조절
         while (scale.x < 1.5f)
         {
-            scale.x += Time.deltaTime * 0.5f;
-            scale.y += Time.deltaTime * 0.5f;
+            scale.x += Time.deltaTime * 0.4f;
+            scale.y += Time.deltaTime * 0.4f;
             transform.localScale = scale;
 
             // 1초에 3번 깜빡이기                    // 시간 확인
@@ -74,21 +74,25 @@ public class CircleMove : MonoBehaviour
 
             if (scale.x > 1)
             {
-                if ((!play)&&(PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum))
+                if (!play)
                 {
                     // 작은 소품 랜덤 생성
                     for (int i = 0; i < circleBulletNum; i++)
                     {
                         random = (int)UnityEngine.Random.Range(0, 3);
-                        
-                        circleBullet = PhotonNetwork.Instantiate("CircleBullet"+(random+1).ToString(), gameObject.transform.position, Quaternion.identity);
-                        circleBullet.transform.localScale = new Vector3(0.3f, 0.3f, 1f); // 소품 크기
-                        circleBullet.transform.SetParent(this.transform);
-                        pv.RPC("setPar", RpcTarget.Others, circleBullet.GetComponent<PhotonView>().ViewID);
+                        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                        {
+                            pv.RPC("makeSmallBullet", RpcTarget.All, random);
+                        }
                     }
                     play = true;
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                    {
+                        GameObject.Find("CircleMouse").GetComponent<CircleMouse>().cnt--;
+                    }
                 }
                 circleSprite.enabled = false;
+                
                 break;
             }
         }
@@ -96,81 +100,90 @@ public class CircleMove : MonoBehaviour
     }
 
     [PunRPC]
-    void setPar(int pvID)
+    void makeSmallBullet(int random)
     {
-        PhotonView.Find(pvID).gameObject.transform.SetParent(this.transform);
+        circleBullet = Instantiate(circlePrefab[random], gameObject.transform.position, Quaternion.identity);
+        circleBullet.transform.localScale = new Vector3(0.3f, 0.3f, 1f); // 소품 크기
+        circleBullet.transform.SetParent(this.transform);
     }
     
     void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (currentTime != 0f)
         {
-            if (currentTime != 0f)
+            currentTime += Time.deltaTime;
+        }
+
+        // 3초 후 작은 소품들 투명하게
+        if (currentTime > 3f)
+        {
+            StartCoroutine(makeTransparent());
+        }
+
+        // 1초에 한 번 회전
+        if (rotateAngle < currentAngle)
+        {
+            currentAngle = 0f;
+        }
+
+        // 작은 소품들 이동
+        try
+        {
+            // 작은 소품 모두 생성 확인 && 원형 탄막 유닛 && 발사 준비 완료
+            if ((!isFinish) && (play) && (this.CompareTag("BulletUnit1")))
             {
+                // 시간 측정 시작
                 currentTime += Time.deltaTime;
-            }
 
-            // 3초 후 작은 소품들 투명하게
-            if (currentTime > 3f)
-            {
-                StartCoroutine(makeTransparent());
-            }
-
-            // 1초에 한 번 회전
-            if (rotateAngle < currentAngle)
-            {
-                currentAngle = 0f;
-            }
-
-            // 작은 소품들 이동
-            try
-            {
-                // 작은 소품 모두 생성 확인 && 원형 탄막 유닛 && 발사 준비 완료
-                if ((!isFinish) && (play) && (this.CompareTag("BulletUnit1")))
+                // 작은 소품들 스프라이트 초기화
+                for (int i = 0; i < circleBulletNum; i++)
                 {
-                    // 시간 측정 시작
-                    currentTime += Time.deltaTime;
+                    bulletSprite[i] = transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>();
+                }
 
-                    // 작은 소품들 스프라이트 초기화
-                    for (int i = 0; i < circleBulletNum; i++)
-                    {
-                        bulletSprite[i] = transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>();
-                    }
+                bulletColor = bulletSprite[0].color;
 
-                    bulletColor = bulletSprite[0].color;
+                // 작은 소품 이동
+                for (int i = 0; i < circleBulletNum; i++)
+                {
+                    transform.GetChild(i).gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * Mathf.Cos(Mathf.PI * 2 * i / circleBulletNum), speed * Mathf.Sin(Mathf.PI * 2 * i / circleBulletNum));
+                    StartCoroutine(makeRotate(i));
+                }
 
-                    // 작은 소품 이동
-                    for (int i = 0; i < circleBulletNum; i++)
-                    {
-                        transform.GetChild(i).gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * Mathf.Cos(Mathf.PI * 2 * i / circleBulletNum), speed * Mathf.Sin(Mathf.PI * 2 * i / circleBulletNum));
-                        StartCoroutine(makeRotate(i));
-                    }
+                isFinish = true;
+            }
+        }
+        catch (Exception e) { }
 
-                    isFinish = true;
+        // 화면 밖 탄막 삭제
+        try
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if ((transform.GetChild(i).gameObject.transform.position.x > Screen.width) || (transform.GetChild(i).gameObject.transform.position.x < -Screen.width) || (transform.GetChild(i).gameObject.transform.position.y > Screen.height) || (transform.GetChild(i).gameObject.transform.position.y < -Screen.height))
+                {
+                    Destroy(transform.GetChild(i).gameObject);
+                    count++;
                 }
             }
-            catch (Exception e) { }
-            
-            // 화면 밖 탄막 삭제
-            try
+        }
+        catch (Exception e) { }
+
+        // 탄막 유닛 삭제
+        temp = GameObject.Find("CircleBulletUnit(Clone)");
+
+        if ((count == circleBulletNum) && (temp != null))  // 작은 소품 모두 생성된 후 삭제 && 원형 탄막 유닛 존재
+        {
+            for (int i = 0; i < this.transform.childCount; i++)
             {
-                for (int i = 1; i < transform.childCount + 1; i++)
-                {
-                    if ((transform.GetChild(i).gameObject.transform.position.x > Screen.width) || (transform.GetChild(i).gameObject.transform.position.x < -Screen.width) || (transform.GetChild(i).gameObject.transform.position.y > Screen.height) || (transform.GetChild(i).gameObject.transform.position.y < -Screen.height))
-                    {
-                        Destroy(transform.GetChild(i).gameObject);
-                        count++;
-                    }
-                }
+                Destroy(transform.GetChild(i));
             }
-            catch (Exception e) { }
-
-            // 탄막 유닛 삭제
-            temp = GameObject.Find("CircleBulletUnit(Clone)");
-
-            if ((count == circleBulletNum) && (temp != null))  // 작은 소품 모두 생성된 후 삭제 && 원형 탄막 유닛 존재
+            if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
             {
-                PhotonNetwork.Destroy(this.gameObject);
+                if(this.gameObject!=null)
+                {
+                    PhotonNetwork.Destroy(this.gameObject);
+                }
             }
         }
     }
@@ -197,8 +210,10 @@ public class CircleMove : MonoBehaviour
         // 작은 소품들 삭제
         if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
         {
-            PhotonNetwork.Destroy(this.gameObject);
-            yield break;
+            if (this.gameObject != null)
+            {
+                PhotonNetwork.Destroy(this.gameObject);
+            }
         }
     }
 

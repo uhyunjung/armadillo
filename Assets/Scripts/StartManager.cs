@@ -13,7 +13,7 @@ public class StartManager : MonoBehaviour
     // 로비 이동
     public void OnStartClick()
     {
-        SceneManager.LoadScene("Lobby Scene");
+        SceneManager.LoadScene("Lobby Scene"); // 로비
     }
 
     // 환경설정 이동

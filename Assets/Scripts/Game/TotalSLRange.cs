@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class TotalSLRange : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class TotalSLRange : MonoBehaviour
     * 스테이지 조명의 전체 스킬 범위 범위를 페이드인 시키는 코드
     */
 
+    public PhotonView pv;
     BulletBtn bulletBtn;
     private bool check = true;                // 중복 입력 방지를 위한 플래그
     SpriteRenderer rangesr;
 
     // 전체 스킬범위 페이드인 코루틴 호출 함수
+    [PunRPC]
     public void FadeIn(float fadeTime)
     {
         StartCoroutine(CoFadeIn(fadeTime));
@@ -41,19 +44,22 @@ public class TotalSLRange : MonoBehaviour
         check = true;                                       // 플래그를 true로 전환
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        {
+            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 3 && check)
+        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
         {
-            FadeIn(4f);                                     // 페이드인
+            if (Input.GetMouseButtonDown(0) && bulletBtn.num == 3 && check)
+            {
+                pv.RPC("FadeIn", RpcTarget.All, 4f);                                     // 페이드인
+            }
         }
     }
 }
