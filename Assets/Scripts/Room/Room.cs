@@ -9,7 +9,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class Room : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public PhotonView pv;       // 룸매니저 포톤뷰 
+    public PhotonView pv;       // 룸매니저 포톤뷰
     int num = 5;                // 사용자 인원
     int bossnum = -1;            // 보스 유저 번호
     public int bossActorNum = -1;  // 보스 ActorNum
@@ -24,9 +24,9 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     Vector3[] readyPos;         // Ready 텍스트 위치 저장
 
     int cnt;                    // Ready한 사용자 수
-    int readyCnt=1;             // 게임 시작 인원 조건 3명
+    int readyCnt=3;             // 게임 시작 인원 조건 3명
     float time;                 // 카운트다운 5초
-    
+
     public void Awake()
     {
         // 로비와 합치면 바꾸기 및 삭제
@@ -162,7 +162,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                     while(bossActorNum==-1)
                     {
                         findPlayer();
-                        
+
                         bossnum = Random.Range(0, PhotonNetwork.PlayerList.Length);             // 번호 랜덤 선택
 
                         temp = PhotonNetwork.PlayerList[bossnum].CustomProperties;
@@ -172,7 +172,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                         bossActorNum = (int)temp["ActorNum"];
                         pv.RPC("setBoss", RpcTarget.All, bossActorNum);
                     }
-                   
+
                 }
 
                 cnt = 0;
@@ -252,7 +252,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    // 뒤로가기(로비 이동) 
+    // 뒤로가기(로비 이동)
     public void Back()
     {
         PhotonNetwork.LeaveRoom();
