@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Text connectionInfoText; // 네트워크 정보를 표시할 텍스트
 
     public Button back; // 뒤로 버튼
-    //public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
+    public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
     public Button joinNewRoomButton; //룸 접속 버튼(새로 만든 방)
 
     public GameObject room; 
@@ -26,7 +26,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
         // 룸 접속 버튼을 잠시 비활성화
-        //joinButton.interactable = false;
+        joinButton.interactable = false;
         joinNewRoomButton.interactable = false;
 
         // 접속을 시도 중임을 텍스트로 표시
@@ -37,7 +37,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         // 룸 접속 버튼을 활성화
-        //joinButton.interactable = true;
+        joinButton.interactable = true;
         joinNewRoomButton.interactable = true;
 
         // 접속 정보 표시
@@ -51,7 +51,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 룸 접속 버튼을 비활성화
-        //joinButton.interactable = false;
+        joinButton.interactable = false;
         joinNewRoomButton.interactable = false;
 
         // 접속 정보 표시
@@ -83,7 +83,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             roomData.playerCount = roomInfo.PlayerCount;
             roomData.UpdateInfo();
 
-            roomData.GetComponent<Button>().onClick.AddListener
+            roomData.GetComponentInChildren<Button>().onClick.AddListener
             (
                 delegate
                 {
@@ -103,23 +103,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //새로운 방을 만든 후 참가
     public void OnCreateRoomClick()
     {
-        // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
-        joinNewRoomButton.interactable = false;
+        if (roomInput.text == string.Empty) //방 이름이 입력되지 않은 경우
+        {
+            connectionInfoText.text = "방 이름을 입력하세요!";
+        }
+        else //방 이름이 입력된 경우
+        {
+            // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
+            joinNewRoomButton.interactable = false; 
 
-        // 마스터 서버에 접속중이라면
-        if (PhotonNetwork.IsConnected)
-        {
-            // 룸 접속 실행
-            connectionInfoText.text = "룸에 접속중...";
-            PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 5 }, null);
+            // 마스터 서버에 접속중이라면
+            if (PhotonNetwork.IsConnected)
+            {
+                // 룸 접속 실행
+                connectionInfoText.text = "룸에 접속중...";
+                PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 5 }, null);
+            }
+            else
+            {
+                // 마스터 서버에 접속중이 아니라면, 마스터 서버에 접속 시도
+                connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
+                // 마스터 서버로의 재접속 시도
+                PhotonNetwork.ConnectUsingSettings();
+            }
         }
-        else
-        {
-            // 마스터 서버에 접속중이 아니라면, 마스터 서버에 접속 시도
-            connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
-            // 마스터 서버로의 재접속 시도
-            PhotonNetwork.ConnectUsingSettings();
-        }
+
     }
 
     // 룸에 참가 완료된 경우 자동 실행
@@ -134,6 +142,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 타이틀 화면으로 이동
     public void OnBackClick()
     {
+        PhotonNetwork.Disconnect();
+        connectionInfoText.text = "서버 연결 끊김";
         SceneManager.LoadScene("Start Scene");
     }
 

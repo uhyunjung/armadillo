@@ -9,7 +9,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class Room : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public PhotonView pv;       // 룸매니저 포톤뷰 
+    public PhotonView pv;       // 룸매니저 포톤뷰
     int num = 5;                // 사용자 인원
     int bossnum = -1;            // 보스 유저 번호
     public int bossActorNum = -1;  // 보스 ActorNum
@@ -24,16 +24,15 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     Vector3[] readyPos;         // Ready 텍스트 위치 저장
 
     int cnt;                    // Ready한 사용자 수
-    int readyCnt=1;             // 게임 시작 인원 조건 3명
+    int readyCnt=3;             // 게임 시작 인원 조건 3명
     float time;                 // 카운트다운 5초
-    
+
     public void Awake()
     {
         // 로비와 합치면 바꾸기 및 삭제
-        Screen.SetResolution(960, 540, false);                     // 1960*1080 바꾸기
+        Screen.SetResolution(960, 540, false);                     // 1920*1080 바꾸기
         PhotonNetwork.SendRate = 100;
         PhotonNetwork.SerializationRate = 100;
-        PhotonNetwork.ConnectUsingSettings();                      // OnConnectedToMaster 콜백함
         PhotonNetwork.AutomaticallySyncScene = true;
 
         playerList = new bool[num];
@@ -47,32 +46,8 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    // ConnectUsingSettings 콜백 함수
-    public override void OnConnectedToMaster()
-    {
-        PhotonNetwork.JoinRoom("1번방  ");                           // OnJoinedRoom or OnJoinRoomFailed 콜백함
-    }
-
-    // 방이 없으면 방 새로 만들기(로비와 연결 수정 필요) + 사용자 없으면 룸 삭제
-    // 로비 https://devsquare.tistory.com/2 변경 필요 PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime()
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        Hashtable ht = new Hashtable() { { "RoomName", "방이름 저장 필요" } };
-        string[] str = new string[1];
-        str[0] = "RoomName";
-
-        PhotonNetwork.CreateRoom("1번방  ", new RoomOptions
-        {
-            MaxPlayers = 5,
-            IsVisible = true,
-            IsOpen = true,
-            CustomRoomProperties = ht,
-            CustomRoomPropertiesForLobby = str
-        });
-    }
-
     // 방에 접속하면 플레이어 생성
-    public override void OnJoinedRoom()
+    public void Start()
     {
         StartCoroutine("CreatePlayer");
     }
@@ -187,7 +162,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                     while(bossActorNum==-1)
                     {
                         findPlayer();
-                        
+
                         bossnum = Random.Range(0, PhotonNetwork.PlayerList.Length);             // 번호 랜덤 선택
 
                         temp = PhotonNetwork.PlayerList[bossnum].CustomProperties;
@@ -197,7 +172,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                         bossActorNum = (int)temp["ActorNum"];
                         pv.RPC("setBoss", RpcTarget.All, bossActorNum);
                     }
-                   
+
                 }
 
                 cnt = 0;
@@ -277,12 +252,12 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    // 뒤로가기(로비 이동) 바꿔야 됨
+    // 뒤로가기(로비 이동)
     public void Back()
     {
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.Disconnect();
-        SceneManager.LoadScene("Start Scene");
+        SceneManager.LoadScene("Lobby Scene");
     }
 
     // 카운트다운 시간, Ready한 인원 동기화
