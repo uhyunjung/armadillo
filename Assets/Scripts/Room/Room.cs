@@ -29,8 +29,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Awake()
     {
-        // 로비와 합치면 바꾸기 및 삭제
-        Screen.SetResolution(960, 540, false);                     // 1920*1080 바꾸기
+        // 로비와 합치면 바꾸기 및 삭제                    // 1920*1080 바꾸기
         PhotonNetwork.SendRate = 100;
         PhotonNetwork.SerializationRate = 100;
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -172,7 +171,6 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                         bossActorNum = (int)temp["ActorNum"];
                         pv.RPC("setBoss", RpcTarget.All, bossActorNum);
                     }
-
                 }
 
                 cnt = 0;
@@ -193,6 +191,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                 if (time < 0)
                 {
                     PhotonNetwork.CurrentRoom.IsOpen = false;
+                    PhotonNetwork.CurrentRoom.IsVisible = false;
                     pv.RPC("loadRoomManager", RpcTarget.All);
                     cnt = 0;
 
@@ -256,7 +255,11 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     public void Back()
     {
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.Disconnect();
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.JoinLobby();
         SceneManager.LoadScene("Lobby Scene");
     }
 
