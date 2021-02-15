@@ -17,8 +17,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
     public Button joinNewRoomButton; //룸 접속 버튼(새로 만든 방)
 
-    public GameObject room; 
-    public Transform gridTr;
+    public GameObject room; //룸 프리펩
+    public GameObject rnnPopup; //방 이름이 입력되지 않은 경우 뜨는 팝업창
+    public GameObject rcPopup; //방에 연결중일 때 뜨는 팝업창
+    public Transform gridTr; 
 
     // 게임 실행과 동시에 마스터 서버 접속 시도
     private void Start()
@@ -133,7 +135,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (roomInput.text == string.Empty) //방 이름이 입력되지 않은 경우
         {
-            connectionInfoText.text = "방 이름을 입력하세요!";
+            rnnPopup.SetActive(true); //connectionInfoText.text = "방 이름을 입력하세요!";를 대신하는 팝업창
         }
         else //방 이름이 입력된 경우
         {
@@ -144,7 +146,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsConnected)
             {
                 // 룸 접속 실행
-                connectionInfoText.text = "룸에 접속중...";
+                rcPopup.SetActive(true); //connectionInfoText.text = "방에 접속중...";을 대신하는 팝업창
+
                 Hashtable ht = new Hashtable() { };
                 string temp = roomInput.text + "_" + System.DateTime.UtcNow.ToFileTime();
                 ht.Add("RoomName", roomInput.text);
