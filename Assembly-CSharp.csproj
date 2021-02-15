@@ -95,6 +95,9 @@
      <Compile Include="Assets\Scripts\Room\Room.cs" />
      <Compile Include="Assets\Scripts\Room\playerMatch.cs" />
      <Compile Include="Assets\Scripts\SceneMoveManage.cs" />
+     <Compile Include="Assets\Scripts\Setting\SettingUI.cs" />
+     <Compile Include="Assets\Scripts\Setting\SoundController.cs" />
+     <Compile Include="Assets\Scripts\SoundManager.cs" />
      <Compile Include="Assets\Scripts\StartManager.cs" />
      <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
