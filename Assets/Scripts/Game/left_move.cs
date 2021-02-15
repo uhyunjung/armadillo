@@ -9,7 +9,6 @@ using Photon.Pun;
 public class left_move : MonoBehaviour
 {
     public PhotonView pv;
-    int cnt = 8;
 
     Vector2 MousePosition;
     Vector3 originPos;
@@ -110,7 +109,7 @@ public class left_move : MonoBehaviour
     [PunRPC]
     public void skillEnd()
     {
-        for (int i = 0; i < cnt; i++)
+        for (int i = 0; i < 15; i++)
             Destroy(bulletList[i]);
         StartCoroutine("skill_end");
         leftskillStart = false;
@@ -138,9 +137,9 @@ public class left_move : MonoBehaviour
 
     [PunRPC]
     public void random_bullet()
-    {   //반복문을 통해 랜덤한 크기, 위치의 탄막 cnt개 생성
+    {   //반복문을 통해 랜덤한 크기, 위치의 탄막 15개 생성
         Debug.Log("4. 탄막 생성");
-        for (int i = 0; i < cnt; i++)
+        for (int i = 0; i < 15; i++)
         {
             //크기 좌표(x,y) 오브젝트 랜덤으로 설정
             float randomS = UnityEngine.Random.Range(0.4f, 0.8f);

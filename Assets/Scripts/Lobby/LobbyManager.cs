@@ -5,7 +5,6 @@ using Photon.Realtime; // 포톤 서비스 관련 라이브러리
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 // 마스터(매치 메이킹) 서버와 룸 접속을 담당
 public class LobbyManager : MonoBehaviourPunCallbacks
@@ -17,27 +16,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Button joinButton; // 룸 접속 버튼(이미 만들어진 방)
     public Button joinNewRoomButton; //룸 접속 버튼(새로 만든 방)
 
-    public GameObject room; //룸 프리펩
-    public GameObject rnnPopup; //방 이름이 입력되지 않은 경우 뜨는 팝업창
-    public GameObject rcPopup; //방에 연결중일 때 뜨는 팝업창
-    public Transform gridTr; 
+    public GameObject room; 
+    public Transform gridTr;
 
     // 게임 실행과 동시에 마스터 서버 접속 시도
     private void Start()
     {
+        // 마스터 서버 접속 시도
+        PhotonNetwork.ConnectUsingSettings();
 
-        if (!PhotonNetwork.IsConnected)
-        {
-            // 마스터 서버 접속 시도
-            PhotonNetwork.ConnectUsingSettings();
+        // 룸 접속 버튼을 잠시 비활성화
+        joinButton.interactable = false;
+        joinNewRoomButton.interactable = false;
 
-            // 룸 접속 버튼을 잠시 비활성화
-            joinButton.interactable = false;
-            joinNewRoomButton.interactable = false;
-
-            // 접속을 시도 중임을 텍스트로 표시
-            connectionInfoText.text = "마스터 서버에 접속중...";
-        }
+        // 접속을 시도 중임을 텍스트로 표시
+        connectionInfoText.text = "마스터 서버에 접속중...";
     }
 
     // 마스터 서버 접속 성공시 자동 실행
@@ -73,54 +66,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         connectionInfoText.text = "로비에 참가됨";
     }
-    
+
     //룸 리스트 보여주기
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Room"))
+        {
+            Destroy(obj);
+        }
         foreach (RoomInfo roomInfo in roomList)
         {
-            bool check = false;
+            GameObject _room = Instantiate(room, gridTr);
+            RoomData roomData = _room.GetComponent<RoomData>();
+            roomData.roomName = roomInfo.Name;
+            roomData.maxPlayer = roomInfo.MaxPlayers;
+            roomData.playerCount = roomInfo.PlayerCount;
+            roomData.UpdateInfo();
 
-            GameObject[] obj = GameObject.FindGameObjectsWithTag("Room");
-
-            if (roomInfo.PlayerCount==0)
-            {
-                for (int i = 0; i < obj.Length; i++)
+            roomData.GetComponentInChildren<Button>().onClick.AddListener
+            (
+                delegate
                 {
-                    Destroy(obj[i]);
+                    OnClickRoom(roomData.roomName); //선택한 방에 참가
                 }
-                PhotonNetwork.JoinLobby();
-                return;
-            }
-            
-            for(int i=0; i<obj.Length; i++)
-            {
-                if(((string)roomInfo.CustomProperties["RoomID"]).Equals(obj[i].GetComponent<RoomData>().roomID))
-                {
-                    obj[i].GetComponent<RoomData>().playerCount = roomInfo.PlayerCount;
-                    obj[i].GetComponent<RoomData>().UpdateInfo();
-                    check = true;
-                    break;
-                }
-            }
+            );
 
-            if(!check)
-            {
-                GameObject _room = Instantiate(room, gridTr);
-                RoomData roomData = _room.GetComponent<RoomData>();
-                roomData.roomName = (string)roomInfo.CustomProperties["RoomName"];
-                roomData.roomID = (string)roomInfo.CustomProperties["RoomID"];
-                roomData.maxPlayer = roomInfo.MaxPlayers;
-                roomData.playerCount = roomInfo.PlayerCount;
-                roomData.UpdateInfo();
-                roomData.GetComponentInChildren<Button>().onClick.AddListener
-                (
-                    delegate
-                    {
-                        OnClickRoom(roomData.roomID); //선택한 방에 참가
-                    }
-                );
-            }
         }
     }
 
@@ -135,27 +105,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (roomInput.text == string.Empty) //방 이름이 입력되지 않은 경우
         {
-            rnnPopup.SetActive(true); //connectionInfoText.text = "방 이름을 입력하세요!";를 대신하는 팝업창
+            connectionInfoText.text = "방 이름을 입력하세요!";
         }
         else //방 이름이 입력된 경우
         {
             // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
-            joinNewRoomButton.interactable = false;
+            joinNewRoomButton.interactable = false; 
 
             // 마스터 서버에 접속중이라면
             if (PhotonNetwork.IsConnected)
             {
                 // 룸 접속 실행
-                rcPopup.SetActive(true); //connectionInfoText.text = "방에 접속중...";을 대신하는 팝업창
-
-                Hashtable ht = new Hashtable() { };
-                string temp = roomInput.text + "_" + System.DateTime.UtcNow.ToFileTime();
-                ht.Add("RoomName", roomInput.text);
-                ht.Add("RoomID", temp);
-                string[] str = new string[2];
-                str[0] = "RoomName";
-                str[1] = "RoomID";
-                PhotonNetwork.JoinOrCreateRoom(temp, new RoomOptions { MaxPlayers = 5, IsVisible = true, IsOpen = true, CustomRoomProperties = ht, CustomRoomPropertiesForLobby = str }, null);
+                connectionInfoText.text = "룸에 접속중...";
+                PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 5 }, null);
             }
             else
             {

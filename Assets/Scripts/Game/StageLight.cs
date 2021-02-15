@@ -46,39 +46,19 @@ public class StageLight : MonoBehaviour
     {
         check = false;                          // 플래그를 false로 전환
         int SLcount = 0;
-        float cool = 4.0f;
 
         yield return new WaitForSeconds(2);
         TotalStageLight.SetActive(true);        // 전체 스프라이트 등장
 
-        while (cool > 0.0f)                 //카메라 흔들기
-        {
-            cool -= Time.deltaTime;
-            GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
-            yield return null;
-        }
-        cool = 4.0f;
-        GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();   //카메라 흔들림 초기화
-
-        // yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(4);
         FlashingLight.SetActive(false);         // 조명 OFF
 
         while (SLcount < 2)                     // 조명 점멸을 2회 반복
         {
             yield return new WaitForSeconds(2);
             FlashingLight.SetActive(true);      //  조명 ON
-
-            while (cool > 0.0f)                 //카메라 흔들기
-            {
-                cool -= Time.deltaTime;
-                GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
-                yield return null;
-            }
-            cool = 4.0f;
-
-            // yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(4);
             FlashingLight.SetActive(false);     //  조명 OFF
-            GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();   //카메라 흔들림 초기화
             SLcount++;
         }
         TotalStageLight.SetActive(false);       // 패턴 종료 (전체 스프라이트 비활성화)

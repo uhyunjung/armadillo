@@ -9,7 +9,6 @@ public class RoomData : MonoBehaviour
     public string roomName = "";
     public int playerCount = 0;
     public int maxPlayer = 5;
-    public string roomID = "";
 
     [System.NonSerialized]
     public Text roomDataTxt;
