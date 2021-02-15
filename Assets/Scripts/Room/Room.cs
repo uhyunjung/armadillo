@@ -29,8 +29,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Awake()
     {
-        // 로비와 합치면 바꾸기 및 삭제
-        Screen.SetResolution(960, 540, false);                     // 1920*1080 바꾸기
+        // 로비와 합치면 바꾸기 및 삭제                    // 1920*1080 바꾸기
         PhotonNetwork.SendRate = 100;
         PhotonNetwork.SerializationRate = 100;
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -66,7 +65,30 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
             if (!playerList[i])
             {
                 PhotonNetwork.SetPlayerCustomProperties(new Hashtable() { { "Ready", "No" }, { "index", i }, { "ActorNum", PhotonNetwork.LocalPlayer.ActorNumber } });  // 위치 할당 위해 인덱스 필요(actornum 사용X)
-                PhotonNetwork.Instantiate("PlayerPrefab", playerPos[i], Quaternion.identity, 0);
+                // 사용자 접속 순서에 따른 아르마딜로 색상 할당
+                switch (i)
+                {
+                    case 0:
+                        PhotonNetwork.Instantiate("PlayerPrefab", playerPos[i], Quaternion.identity, 0);
+                        break;
+                    case 1:
+                        PhotonNetwork.Instantiate("RedPlayerPrefab", playerPos[i], Quaternion.identity, 0);
+                        break;
+                    case 2:
+                        PhotonNetwork.Instantiate("GreenPlayerPrefab", playerPos[i], Quaternion.identity, 0);
+                        break;
+                    case 3:
+                        PhotonNetwork.Instantiate("BluePlayerPrefab", playerPos[i], Quaternion.identity, 0);
+                        break;
+                    case 4:
+                        PhotonNetwork.Instantiate("PurplePlayerPrefab", playerPos[i], Quaternion.identity, 0);
+                        break;
+                    // default : 기본 아르마딜로 할당
+                    default:
+                        PhotonNetwork.Instantiate("PlayerPrefab", playerPos[i], Quaternion.identity, 0);
+                        break;
+                }
+                // 각 사용자마다 Ready 텍스트 할당
                 PhotonNetwork.Instantiate("ReadyText", readyPos[i], Quaternion.identity, 0);
                 break;
             }
@@ -172,7 +194,6 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                         bossActorNum = (int)temp["ActorNum"];
                         pv.RPC("setBoss", RpcTarget.All, bossActorNum);
                     }
-
                 }
 
                 cnt = 0;
@@ -193,6 +214,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                 if (time < 0)
                 {
                     PhotonNetwork.CurrentRoom.IsOpen = false;
+                    PhotonNetwork.CurrentRoom.IsVisible = false;
                     pv.RPC("loadRoomManager", RpcTarget.All);
                     cnt = 0;
 
@@ -256,7 +278,11 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     public void Back()
     {
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.Disconnect();
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.JoinLobby();
         SceneManager.LoadScene("Lobby Scene");
     }
 
