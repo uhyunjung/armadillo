@@ -165,6 +165,7 @@ public class DashMove : MonoBehaviour
         if(room.checkBoss.Count>0)
         {
             this.gameObject.transform.position = room.bossPos[room.checkBoss.Count - 1];
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0); // 사망 후 속도 초기화
             room.checkBoss.Add(actorNum);
         }
 
