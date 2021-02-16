@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class StageLight : MonoBehaviour
@@ -30,15 +31,6 @@ public class StageLight : MonoBehaviour
     public void Flash()
     {
         StartCoroutine(CoFlash());
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        }
     }
 
     // 조명 점멸제어 코루틴
@@ -91,20 +83,31 @@ public class StageLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            if (bulletBtn.num == 3 && check)        // 스킬범위 표시
+            if (GameObject.Find("RoomManager") != null)
             {
-                pv.RPC("setAct", RpcTarget.All, true);
-            }
-            else
-            {
-                pv.RPC("setAct", RpcTarget.All, false);           // 마우스 입력 OR 다른 스킬 선택 시, 스킬범위 표시를 중지함
-            }
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                {
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
 
-            if (Input.GetMouseButtonDown(0) && bulletBtn.num == 3 && check) // 실제로 스킬을 발동시키는 경우
-            {
-                pv.RPC("Flash", RpcTarget.All);                            // 스킬 발동
+                    if (bulletBtn)
+                    {
+                        if (bulletBtn.num == 3 && check)        // 스킬범위 표시
+                        {
+                            pv.RPC("setAct", RpcTarget.All, true);
+                        }
+                        else
+                        {
+                            pv.RPC("setAct", RpcTarget.All, false);           // 마우스 입력 OR 다른 스킬 선택 시, 스킬범위 표시를 중지함
+                        }
+
+                        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 3 && check) // 실제로 스킬을 발동시키는 경우
+                        {
+                            pv.RPC("Flash", RpcTarget.All);                            // 스킬 발동
+                        }
+                    }
+                }
             }
         }
     }

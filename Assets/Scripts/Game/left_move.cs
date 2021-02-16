@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 /*
  탄막 6번 스피커 왼쪽 등장 관련 스크립트입니다.
@@ -30,10 +31,6 @@ public class left_move : MonoBehaviour
     bool leftskillStart;
     void Start()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        }
         originPos = transform.localPosition;
         ArmspriteRenderer = GetComponent<SpriteRenderer>();
         RangespriteRenderer = GameObject.FindGameObjectWithTag("skillRangeL").GetComponent<SpriteRenderer>();
@@ -49,28 +46,39 @@ public class left_move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            selectNum = bulletBtn.num;
-
-            if (Input.GetMouseButtonUp(0))
+            if (GameObject.Find("RoomManager") != null)
             {
-                if (selectNum == 5)
-                {
-                    MousePosition = Input.mousePosition;
-                    MousePosition = Camera.ScreenToWorldPoint(MousePosition);
-                    if (MousePosition.x < 0)
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+            {
+                bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+
+                    if (bulletBtn)
                     {
-                        Debug.Log("<<왼쪽 스킬 발동>>");
-                        //스킬 중복 발동 방지
-                        if (!leftskillStart && GameObject.FindGameObjectWithTag("ampLeft").activeSelf)
+                        selectNum = bulletBtn.num;
+
+                        if (Input.GetMouseButtonUp(0))
                         {
-                            rightAmp.SetActive(false);
-                            pv.RPC("startSkill", RpcTarget.All);
-                            // StartCoroutine("skill_start");
-                           // pv.RPC("random_bullet", RpcTarget.All);
-                            pv.RPC("endingSkill", RpcTarget.All);
-                            //Invoke("skillEnd", 8);
+                            if (selectNum == 5)
+                            {
+                                MousePosition = Input.mousePosition;
+                                MousePosition = Camera.ScreenToWorldPoint(MousePosition);
+                                if (MousePosition.x < 0)
+                                {
+                                    Debug.Log("<<왼쪽 스킬 발동>>");
+                                    //스킬 중복 발동 방지
+                                    if (!leftskillStart && GameObject.FindGameObjectWithTag("ampLeft").activeSelf)
+                                    {
+                                        rightAmp.SetActive(false);
+                                        pv.RPC("startSkill", RpcTarget.All);
+                                        // StartCoroutine("skill_start");
+                                        // pv.RPC("random_bullet", RpcTarget.All);
+                                        pv.RPC("endingSkill", RpcTarget.All);
+                                        //Invoke("skillEnd", 8);
+                                    }
+                                }
+                            }
                         }
                     }
                 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class TotalSLRange : MonoBehaviour
@@ -44,21 +45,24 @@ public class TotalSLRange : MonoBehaviour
         check = true;                                       // 플래그를 true로 전환
     }
 
-    void Start()
-    {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        }
-    }
-
     void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            if (Input.GetMouseButtonDown(0) && bulletBtn.num == 3 && check)
+            if (GameObject.Find("RoomManager") != null)
             {
-                pv.RPC("FadeIn", RpcTarget.All, 4f);                                     // 페이드인
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                {
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+
+                    if (bulletBtn)
+                    {
+                        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 3 && check)
+                        {
+                            pv.RPC("FadeIn", RpcTarget.All, 4f);                                     // 페이드인
+                        }
+                    }
+                }
             }
         }
     }

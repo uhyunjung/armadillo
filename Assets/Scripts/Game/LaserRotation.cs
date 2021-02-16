@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class LaserRotation : MonoBehaviour
@@ -25,10 +26,6 @@ public class LaserRotation : MonoBehaviour
 
     private void Start()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        }
         spr = GetComponent<SpriteRenderer>();
 
         target = transform.position;
@@ -37,17 +34,28 @@ public class LaserRotation : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            pv.RPC("disappear", RpcTarget.All);
-
-            mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;
-
-            //마우스 클릭 시 레이저 각도 고정
-            if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
+            if(GameObject.Find("RoomManager")!=null)
             {
-                pv.RPC("FixAngle", RpcTarget.All, angle);
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                {
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+
+                    if (bulletBtn)
+                    {
+                        pv.RPC("disappear", RpcTarget.All);
+
+                        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;
+
+                        //마우스 클릭 시 레이저 각도 고정
+                        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
+                        {
+                            pv.RPC("FixAngle", RpcTarget.All, angle);
+                        }
+                    }
+                }
             }
         }
     }
