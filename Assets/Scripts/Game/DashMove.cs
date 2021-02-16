@@ -14,7 +14,7 @@ public class DashMove : MonoBehaviour
     //max 체력과 현재 체력 변수
     public int maxHealth = 100;
     public int currentHealth;
-    int shotHealth = 20;  // 25
+    int shotHealth = 10;  //피격 시 감소 체력, 10번 피격 시 죽음, 25에서 10으로
 
     public Vector2 speed_vec; //플레이어 속도 벡터
     public float speed; //이동 속도
@@ -28,7 +28,7 @@ public class DashMove : MonoBehaviour
     public bool isDie = false; //죽음 여부
     public bool beShot;
     public bool isDelay; //딜레이 여부
-    public float delayTime = 0.5f; //대쉬 딜레이 시간
+    public float delayTime = 0.2f; //대쉬 딜레이 시간 ,0.5 -> 0.2로 변경
 
     SpriteRenderer spriteRenderer; //스프라이트 렌더러
     Animator anim; //애니메이터
@@ -103,8 +103,8 @@ public class DashMove : MonoBehaviour
                 if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
                 {
                     anim.SetBool("isWalking", true);
-                    speed_vec.x = Input.GetAxis("Horizontal") * speed;
-                    speed_vec.y = Input.GetAxis("Vertical") * speed;
+                    speed_vec.x = Input.GetAxis("Horizontal") * speed * 2; //속도 2배로 증가
+                    speed_vec.y = Input.GetAxis("Vertical") * speed * 2;
 
                     rb.velocity = speed_vec;
                 }
@@ -143,8 +143,8 @@ public class DashMove : MonoBehaviour
                     {
                         dashTime -= Time.deltaTime;
 
-                        speed_vec.x = Input.GetAxis("Horizontal") * speed * 3; //대쉬 중 이동속도 3배
-                        speed_vec.y = Input.GetAxis("Vertical") * speed * 3;
+                        speed_vec.x = Input.GetAxis("Horizontal") * speed * 4; //대쉬 중 이동속도 3배
+                        speed_vec.y = Input.GetAxis("Vertical") * speed * 4;   //ㄴ기본 속도가 2배 돼서 4배로 수정함
 
                         rb.velocity = speed_vec;
                         pv.RPC("StartUnBeat", RpcTarget.All);
@@ -162,7 +162,7 @@ public class DashMove : MonoBehaviour
         isBoss = true;
         HpBar.gameObject.SetActive(false);
         room = GameObject.Find("RoomManager").GetComponent<Room>();
-        if(room.checkBoss.Count>0)
+        if (room.checkBoss.Count > 0)
         {
             this.gameObject.transform.position = room.bossPos[room.checkBoss.Count - 1];
             this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0); // 사망 후 속도 초기화
@@ -293,7 +293,7 @@ public class DashMove : MonoBehaviour
 
         yield return null;
     }
-    
+
     // 내 컴퓨터+다른 사용자 컴퓨터에 함수 실행 요청
     [PunRPC]
     void FlipImg(int n)

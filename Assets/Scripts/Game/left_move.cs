@@ -11,6 +11,7 @@ public class left_move : MonoBehaviour
 {
     public PhotonView pv;
     int cnt = 8;
+    float cool = 2.0f; //카메라 흔들기
 
     Vector2 MousePosition;
     Vector3 originPos;
@@ -51,8 +52,8 @@ public class left_move : MonoBehaviour
             if (GameObject.Find("RoomManager") != null)
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-            {
-                bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+                {
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
 
                     if (bulletBtn)
                     {
@@ -72,8 +73,6 @@ public class left_move : MonoBehaviour
                                     {
                                         rightAmp.SetActive(false);
                                         pv.RPC("startSkill", RpcTarget.All);
-                                        // StartCoroutine("skill_start");
-                                        // pv.RPC("random_bullet", RpcTarget.All);
                                         pv.RPC("endingSkill", RpcTarget.All);
                                         //Invoke("skillEnd", 8);
                                     }
@@ -104,16 +103,16 @@ public class left_move : MonoBehaviour
         }
         ArmspriteRenderer.color = new Color(ArmspriteRenderer.color.r, ArmspriteRenderer.color.g, ArmspriteRenderer.color.b, 1f);
         Debug.Log("2. 알파값 변화 종료");
-        // Camera.main.GetComponent<cameraShake>().ShakeCamera(1.0f);코드 질문
-     //   yield return new WaitForSeconds(.1f);
+        StartCoroutine(Cooltime(cool));
         random_bullet();
+
         Debug.Log("왼쪽 문어발 등장");
 
     }
     [PunRPC]
     public void endingSkill()
     {
-        Invoke("skillEnd", 8);
+        Invoke("skillEnd", 5);
     }
     [PunRPC]
     public void skillEnd()
@@ -127,6 +126,7 @@ public class left_move : MonoBehaviour
 
     IEnumerator skill_end()
     {
+
         Debug.Log("1. 알파값 변화 시작");
 
         for (float i = 1f; i >= 0f; i -= 0.1f)
@@ -143,6 +143,19 @@ public class left_move : MonoBehaviour
 
     }
     //탄막 랜덤 생성 함수
+    IEnumerator Cooltime(float cool)
+    {
+        //레이저 발동시간 내 카메라 흔들기 및 각도 고정
+        //check = false;
+        while (cool > 0.0f)
+        {
+            cool -= Time.deltaTime;
+            GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
+            yield return null;
+        }
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
+        //check = true;
+    }
 
     [PunRPC]
     public void random_bullet()
@@ -152,8 +165,8 @@ public class left_move : MonoBehaviour
         {
             //크기 좌표(x,y) 오브젝트 랜덤으로 설정
             float randomS = UnityEngine.Random.Range(0.4f, 0.8f);
-            float randomX = UnityEngine.Random.Range(-12f, -11f);
-            float randomY = UnityEngine.Random.Range(2f, 3f);
+            float randomX = UnityEngine.Random.Range(-7.5f, -8f);
+            float randomY = UnityEngine.Random.Range(1f, 2f);
             int randomO = UnityEngine.Random.Range(0, prefab.Length);
 
 
@@ -164,7 +177,7 @@ public class left_move : MonoBehaviour
 
             obj.transform.SetParent(ArmspriteRenderer.transform, true);
             obj.transform.localScale = new Vector3(randomS, randomS, 0);
-            obj.GetComponent<Rigidbody2D>().gravityScale = UnityEngine.Random.Range(0.8f, 1.2f); //3
+            obj.GetComponent<Rigidbody2D>().gravityScale = UnityEngine.Random.Range(0.8f, 1.5f); //3
                                                                                                  //  obj.transform.SetParent(ArmspriteRenderer.transform, false); //프리팹 크기 일정하게
 
             bulletList.Add(obj);
