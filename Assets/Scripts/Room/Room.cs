@@ -22,10 +22,14 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     Hashtable temp;             // 임시 해시테이블(프로퍼티 설정)
     Vector3[] playerPos;        // 플레이어 위치 저장
     Vector3[] readyPos;         // Ready 텍스트 위치 저장
+    public Vector3[] bossPos;
 
     int cnt;                    // Ready한 사용자 수
     int readyCnt=3;             // 게임 시작 인원 조건 3명
     float time;                 // 카운트다운 5초
+
+    public List<int> checkBoss;        // 보스되었는지 확인
+    public bool isPrepare = false;
 
     public void Awake()
     {
@@ -37,18 +41,55 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
         playerList = new bool[num];
         playerPos = new Vector3[num];
         readyPos = new Vector3[num];
+        bossPos = new Vector3[num];
 
         for (int i = 0; i < num; i++)
         {
             playerPos[i] = new Vector3(-6 + 3f * i, -2, 0);        // 아르마딜로 간격 3
             readyPos[i] = new Vector3(-630 + 315 * i, -350, 0);    // Ready 버튼 간격 315(1960 기준)
+            bossPos[i] = new Vector3(2.67f + 0.7f * i, 0.5f, 1);
         }
+
+        bossPos[0] = new Vector3(0f, 4f, 1);
+        bossPos[1] = new Vector3(-3f, 4f, 1);
+        bossPos[2] = new Vector3(3f, 4f, 1);
+        bossPos[3] = new Vector3(-4f, 4f, 1);
+        bossPos[4] = new Vector3(4f, 4f, 1);
     }
 
     // 방에 접속하면 플레이어 생성
     public void Start()
     {
+        checkBoss.Clear();
         StartCoroutine("CreatePlayer");
+    }
+
+    public void Update()
+    {
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // 사람 수 적음
+                if ((PhotonNetwork.PlayerList.Length < readyCnt) || (checkBoss.Count == 0))
+                {
+                    PhotonNetwork.DestroyAll();
+                    if (PhotonNetwork.InRoom)
+                    {
+                        PhotonNetwork.LeaveRoom();
+                    }
+                }
+                else if (checkBoss.Count == PhotonNetwork.PlayerList.Length + 1)             // 게임 종료
+                {
+                    // 모두 보스됨
+                    PhotonNetwork.DestroyAll();
+                    if (PhotonNetwork.InRoom)
+                    {
+                        PhotonNetwork.LeaveRoom();
+                    }
+                }
+            } 
+        }  
     }
 
     // 아르마딜로 생성
@@ -99,15 +140,25 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     // SetPlayerCustomProperties 콜백 함수(모든 사용자 실행) => 여기서는 플레이어가 룸을 접속할 때 실행
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if (SceneManager.GetActiveScene().name.Equals("Room Scene"))
+        if ((SceneManager.GetActiveScene().name.Equals("Room Scene")) && (!isPrepare))
             readyCount();
     }
 
     // 사용자가 방을 나갈 때 실행(Ready 판별)
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if (SceneManager.GetActiveScene().name.Equals("Room Scene"))
+        if ((SceneManager.GetActiveScene().name.Equals("Room Scene")) && (!isPrepare))
             readyCount();
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
+        {
+            for(int i=0; i<checkBoss.Count; i++)
+            {
+                if(checkBoss[i].Equals(otherPlayer.ActorNumber))
+                {
+                    checkBoss.RemoveAt(i);
+                }
+            }
+        }
     }
 
     public void readyCount()
@@ -159,6 +210,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     // 카운트다운
     IEnumerator CountDown()
     {
+        isPrepare = true;
         msg.text = "게임이 곧 시작됩니다";
         countNum.gameObject.SetActive(false);
 
@@ -169,7 +221,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
 
         yield return new WaitForSeconds(1);
 
-        while (true)
+        while ((true) && (SceneManager.GetActiveScene().name.Equals("Room Scene")))
         {
             countDown.text = ((int)time).ToString();
 
@@ -178,22 +230,20 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                 // 1초
                 time -= Time.deltaTime;
 
-                // 방장이 boss 정함
-                if (PhotonNetwork.IsMasterClient)
+                while (bossActorNum == -1)
                 {
-                    while(bossActorNum==-1)
-                    {
-                        findPlayer();
+                    findPlayer();
 
-                        bossnum = Random.Range(0, PhotonNetwork.PlayerList.Length);             // 번호 랜덤 선택
+                    bossnum = Random.Range(0, PhotonNetwork.PlayerList.Length);             // 번호 랜덤 선택
 
-                        temp = PhotonNetwork.PlayerList[bossnum].CustomProperties;
+                    temp = PhotonNetwork.PlayerList[bossnum].CustomProperties;
 
-                        // bossnum 접근 편하게 index에서 ActorNum으로 변경
-                        PhotonNetwork.Instantiate("BossPrefab", playerPos[(int)temp["index"]], Quaternion.identity, 0);
-                        bossActorNum = (int)temp["ActorNum"];
-                        pv.RPC("setBoss", RpcTarget.All, bossActorNum);
-                    }
+                    // bossnum 접근 편하게 index에서 ActorNum으로 변경
+                    playerPos[(int)temp["index"]].z -= 1;  // 깜박임 방지
+                    PhotonNetwork.Instantiate("BossPrefab", playerPos[(int)temp["index"]], Quaternion.identity, 0);
+
+                    bossActorNum = (int)temp["ActorNum"];
+                    pv.RPC("setBoss", RpcTarget.All, bossActorNum);
                 }
 
                 cnt = 0;
@@ -221,6 +271,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
                     if (PhotonNetwork.IsMasterClient)
                     {
                         PhotonNetwork.Destroy(GameObject.Find("BossPrefab(Clone)"));
+                        playerPos[(int)temp["index"]].z += 1;
                     }
                     PhotonNetwork.LoadLevel("Game Scene");
                     SceneManager.LoadScene("Game Scene");
@@ -231,14 +282,17 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
             // 카운트다운 시작 후 Ready 해제하여 Ready한 플레이어가 3명 미만일 때 실행
             if (SceneManager.GetActiveScene().name.Equals("Room Scene") && (cnt < readyCnt))
             {
+                isPrepare = false;
                 msg.text = "다른 유저를 대기중입니다";
                 countNum.text = PhotonNetwork.PlayerList.Length.ToString() + "/5";
+                bossActorNum = -1;
 
                 if (PhotonNetwork.IsMasterClient)
                 {
                     PhotonNetwork.Destroy(GameObject.Find("BossPrefab(Clone)"));
                     pv.RPC("setBoss", RpcTarget.All, -1);
                 }
+                pv.RPC("clearCheckBoss", RpcTarget.All);
                 countNum.gameObject.SetActive(true);
                 countDown.gameObject.SetActive(false);
                 yield break;
@@ -284,6 +338,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     {
         PhotonNetwork.JoinLobby();
         SceneManager.LoadScene("Lobby Scene");
+        Destroy(this.gameObject);
     }
 
     // 카운트다운 시간, Ready한 인원 동기화
@@ -307,5 +362,12 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     void setBoss(int n)
     {
         bossActorNum = n;
+        checkBoss.Add(n);
+    }
+
+    [PunRPC]
+    void clearCheckBoss()
+    {
+        checkBoss.Clear();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 // 탄막 2번
@@ -9,6 +10,7 @@ public class SLRange : MonoBehaviour
 {
     BulletBtn bulletBtn;  // 탄막 버튼 스크립트
     public PhotonView pv;
+    public GameObject armManager;
 
     private bool check = true;
     public float timer;
@@ -38,7 +40,7 @@ public class SLRange : MonoBehaviour
 
             yield return null;
         }
-
+        armManager.GetComponent<ArmManager>().setColorZero();
         rangesr.color = tempColor;
         this.transform.rotation = new Quaternion(0, 0, 0, 0);
         check = true;
@@ -46,11 +48,6 @@ public class SLRange : MonoBehaviour
 
     void Start()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        }
-
         timer = 0.0F;
         waitingTime = 2;
         //SLRng = GameObject.Find("StageLightRange");
@@ -58,20 +55,30 @@ public class SLRange : MonoBehaviour
 
     void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
+            if (GameObject.Find("RoomManager") != null)
             {
-                pv.RPC("FadeIn", RpcTarget.All, 2f);
-                timer += Time.deltaTime;
-                if (timer > waitingTime)
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
                 {
-                    //Action
-                    //SLRng.SetActive(false);
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+
+                    if (bulletBtn)
+                    {
+                        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
+                        {
+                            pv.RPC("FadeIn", RpcTarget.All, 2f);
+                            timer += Time.deltaTime;
+                            if (timer > waitingTime)
+                            {
+                                //Action
+                                //SLRng.SetActive(false);
+                            }
+                        }
+                    }
                 }
             }
+            //state = false;   // 추후에 추가될 플래그 변수
         }
-
-        //state = false;   // 추후에 추가될 플래그 변수
     }
 }

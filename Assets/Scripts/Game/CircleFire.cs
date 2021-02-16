@@ -41,7 +41,7 @@ public class CircleFire : MonoBehaviour
             yield return null;
         }
 
-        if(PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if(pv.AmOwner)
         {
             PhotonNetwork.Instantiate("CircleBulletUnit", this.gameObject.transform.position, Quaternion.identity);
             PhotonNetwork.Destroy(gameObject);

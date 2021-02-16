@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class CircleMouse : MonoBehaviour
@@ -21,40 +22,46 @@ public class CircleMouse : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        else
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-            gameObject.SetActive(true);
-        }
     }
 
     void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            if (bulletBtn.num == 0)
+            if (GameObject.Find("RoomManager") != null)
             {
-                // 마우스 따라다니기
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
-
-                if (Input.GetMouseButton(0))
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
                 {
-                    if((!isFire)&&(cnt<shotNum))
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+
+                    if (bulletBtn)
                     {
-                        mousePosition = this.transform.position;
-                        StartCoroutine(makeCircle());
-                        cnt++;
+                        if (bulletBtn.num == 0)
+                        {
+                            // 마우스 따라다니기
+                            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                            gameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+
+                            if (Input.GetMouseButton(0))
+                            {
+                                if ((!isFire) && (cnt < shotNum))
+                                {
+                                    mousePosition = this.transform.position;
+                                    StartCoroutine(makeCircle());
+                                    cnt++;
+                                }
+                            }
+                            else
+                            {
+                                isFire = false;
+                            }
+                        }
+                        else
+                        {
+                            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                        }
                     }
                 }
-                else
-                {
-                    isFire = false;
-                }
-            }
-            else
-            {
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }
         }
     }

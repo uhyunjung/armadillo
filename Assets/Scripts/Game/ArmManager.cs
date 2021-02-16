@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class ArmManager : MonoBehaviour
@@ -16,27 +17,29 @@ public class ArmManager : MonoBehaviour
 
     private void Start()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        }
         spr = GetComponent<SpriteRenderer>();        //스프라이트 렌더러 선언
         color = spr.color;
         pv.RPC("setColor", RpcTarget.All, 0);
     }
     private void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            if (bulletBtn.num == 1)             //활성화
+            if (GameObject.Find("RoomManager") != null)
             {
-                //Debug.Log("2번 탄환 실행");
-                pv.RPC("setColor", RpcTarget.All, 1);
-            }
-            else if (bulletBtn.num != 1)   //bulletBtn.num != 1일때 비활성화
-            {
-                //Debug.Log("2번 탄환 종료");
-                pv.RPC("setColor", RpcTarget.All, 0);
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                {
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+
+                    if (bulletBtn)
+                    {
+                        if (Input.GetMouseButtonDown(0) && (bulletBtn.num == 1))             //활성화
+                        {
+                            //Debug.Log("2번 탄환 실행");
+                            pv.RPC("setColor", RpcTarget.All, 1);
+                        }
+                    }
+                }
             }
         }
     }
@@ -44,7 +47,13 @@ public class ArmManager : MonoBehaviour
     [PunRPC]
     void setColor(int value)
     {
+        spr = GetComponent<SpriteRenderer>();
         color.a = value;
         spr.color = color;
+    }
+
+    public void setColorZero()
+    {
+        pv.RPC("setColor", RpcTarget.All, 0);
     }
 }

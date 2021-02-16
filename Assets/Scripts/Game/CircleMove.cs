@@ -80,13 +80,13 @@ public class CircleMove : MonoBehaviour
                     for (int i = 0; i < circleBulletNum; i++)
                     {
                         random = (int)UnityEngine.Random.Range(0, 3);
-                        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                        if (pv.AmOwner)
                         {
                             pv.RPC("makeSmallBullet", RpcTarget.All, random);
                         }
                     }
                     play = true;
-                    if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                    if (pv.AmOwner)
                     {
                         GameObject.Find("CircleMouse").GetComponent<CircleMouse>().cnt--;
                     }
@@ -160,7 +160,7 @@ public class CircleMove : MonoBehaviour
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                if ((transform.GetChild(i).gameObject.transform.position.x > Screen.width) || (transform.GetChild(i).gameObject.transform.position.x < -Screen.width) || (transform.GetChild(i).gameObject.transform.position.y > Screen.height) || (transform.GetChild(i).gameObject.transform.position.y < -Screen.height))
+                if ((transform.GetChild(i).gameObject.transform.position.x > 10) || (transform.GetChild(i).gameObject.transform.position.x < -10) || (transform.GetChild(i).gameObject.transform.position.y > 5) || (transform.GetChild(i).gameObject.transform.position.y < -5))
                 {
                     Destroy(transform.GetChild(i).gameObject);
                     count++;
@@ -170,20 +170,11 @@ public class CircleMove : MonoBehaviour
         catch (Exception e) { }
 
         // 탄막 유닛 삭제
-        temp = GameObject.Find("CircleBulletUnit(Clone)");
-
-        if ((count == circleBulletNum) && (temp != null))  // 작은 소품 모두 생성된 후 삭제 && 원형 탄막 유닛 존재
+        if(pv.AmOwner)
         {
-            for (int i = 0; i < this.transform.childCount; i++)
+            if ((count == circleBulletNum) && (temp != null))  // 작은 소품 모두 생성된 후 삭제 && 원형 탄막 유닛 존재
             {
-                Destroy(transform.GetChild(i));
-            }
-            if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-            {
-                if(this.gameObject!=null)
-                {
-                    PhotonNetwork.Destroy(this.gameObject);
-                }
+                PhotonNetwork.Destroy(this.gameObject);
             }
         }
     }
@@ -208,7 +199,7 @@ public class CircleMove : MonoBehaviour
         }
 
         // 작은 소품들 삭제
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (pv.AmOwner)
         {
             if (this.gameObject != null)
             {

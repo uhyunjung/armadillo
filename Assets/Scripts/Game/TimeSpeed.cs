@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 // 탄막 3번
@@ -20,25 +21,31 @@ public class TimeSpeed : MonoBehaviour
     SpriteRenderer spriteRenderer;
     void Start()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-        {
-            bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-        }
         ct = GameObject.Find("TimeController").GetComponent<Controller_Time>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-
     void Update()
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            if (Input.GetMouseButtonDown(0) && bulletBtn.num == 2 && check)
+            if (GameObject.Find("RoomManager") != null)
             {
-                selectMode = Random.Range(1, 3);    //랜덤으로 1 혹은 2의 정수 생성
-                pv.RPC("startMode", RpcTarget.All, selectMode);
+                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+                {
+                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
+
+                    if (bulletBtn)
+                    {
+                        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 2 && check)
+                        {
+                            selectMode = Random.Range(1, 3);    //랜덤으로 1 혹은 2의 정수 생성
+                            pv.RPC("startMode", RpcTarget.All, selectMode);
+                        }
+                    }
+                }
             }
-        }
+        }  
     }
 
     void modeReset()
