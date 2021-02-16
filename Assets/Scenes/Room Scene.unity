@@ -880,7 +880,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 84dc77519f1bf57418599d7ccee7c2cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a55b391f572df5d4097cb7396857917d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -900,7 +900,7 @@ Transform:
   m_GameObject: {fileID: 1382388054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -1174,6 +1174,9 @@ MonoBehaviour:
   msg: {fileID: 1575095126}
   countDown: {fileID: 1384195237}
   countNum: {fileID: 1424000460}
+  bossPos: []
+  checkBoss: 
+  isPrepare: 0
 --- !u!4 &1836651809
 Transform:
   m_ObjectHideFlags: 0
