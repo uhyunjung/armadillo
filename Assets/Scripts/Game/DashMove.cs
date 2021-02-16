@@ -67,7 +67,8 @@ public class DashMove : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
             {
-                HpBar.gameObject.SetActive(true);
+                pv.RPC("setHpBar", RpcTarget.All);
+
 
                 //체력 체크해서 죽음 판정
                 if (currentHealth == 0)
@@ -82,7 +83,8 @@ public class DashMove : MonoBehaviour
 
                 //체력바에 현재 체력 구현
                 if (currentHealth != 0)
-                    HpBar.value = (float)currentHealth / (float)100;
+                    pv.RPC("setHpValue", RpcTarget.All);
+
 
                 //애니메이션 - 스프라이트 방향 전환
                 if (Input.GetButtonDown("Horizontal"))
@@ -147,155 +149,166 @@ public class DashMove : MonoBehaviour
         }
     }
 
-    [PunRPC]
-    void BossOnOff(bool value)
-    {
-        gameObject.GetComponent<SpriteRenderer>().enabled = value;
-        transform.GetChild(0).gameObject.SetActive(value);
-    }
-
-    [PunRPC]
-    void StartDash()
-    {
-        StartCoroutine("DashDelay"); //대시 딜레이
-    }
-
-    [PunRPC]
-    void StartUnBeat()
-    {
-        StartCoroutine("UnBeatTime"); //무적모드
-    }
-
-    [PunRPC]
-    void Die()
-    {
-        isDie = true;
-        gameObject.SetActive(false);
-    }
-
-    [PunRPC]
-    void IsTrigger()
-    {
-        beShot = true; //탄환과 충돌
-
-        if (isUnBeatTime == false) //탄환과 만났고, 무적타임이 아닐 시
+        [PunRPC]
+        void setHpBar()
         {
-            Debug.Log("탄환 피격");
-
-            //체력 25감소
-            currentHealth = currentHealth - 25;
-            Debug.Log("탄환에 피격됐습니다 현재 체력은" + currentHealth);
-
-            //탄환 피격 시 3초 간 무적모드
-            StartCoroutine("UnBeatTime");
-
+            HpBar.gameObject.SetActive(true); //활성화
         }
-    }
-
-    //탄환과 충돌 판정
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (pv.OwnerActorNr != GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+        [PunRPC]
+        void setHpValue()
         {
-            if (collision.CompareTag("bullet"))
+            HpBar.value = (float)currentHealth / (float)100; //현재 체력 업로드
+        }
+
+        [PunRPC]
+        void BossOnOff(bool value)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = value;
+            transform.GetChild(0).gameObject.SetActive(value);
+        }
+
+        [PunRPC]
+        void StartDash()
+        {
+            StartCoroutine("DashDelay"); //대시 딜레이
+        }
+
+        [PunRPC]
+        void StartUnBeat()
+        {
+            StartCoroutine("UnBeatTime"); //무적모드
+        }
+
+        [PunRPC]
+        void Die()
+        {
+            isDie = true;
+            gameObject.SetActive(false);
+        }
+
+        [PunRPC]
+        void IsTrigger()
+        {
+            beShot = true; //탄환과 충돌
+
+            if (isUnBeatTime == false) //탄환과 만났고, 무적타임이 아닐 시
             {
-                if (pv.IsMine)
+                Debug.Log("탄환 피격");
+
+                //체력 25감소
+                currentHealth = currentHealth - 25;
+                Debug.Log("탄환에 피격됐습니다 현재 체력은" + currentHealth);
+
+                //탄환 피격 시 3초 간 무적모드
+                StartCoroutine("UnBeatTime");
+
+            }
+        }
+
+        //탄환과 충돌 판정
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (pv.OwnerActorNr != GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
+            {
+                if (collision.CompareTag("bullet"))
                 {
-                    pv.RPC("IsTrigger", RpcTarget.All);
+                    if (pv.IsMine)
+                    {
+                        pv.RPC("IsTrigger", RpcTarget.All);
+                    }
                 }
             }
         }
-    }
 
-    //대쉬 딜레이
-    IEnumerator DashDelay()
-    {
-        yield return new WaitForSeconds(delayTime);
-        isDelay = false;
-    }
-
-    //대쉬 중 무적
-    IEnumerator UnBeatTime()
-    {
-        Debug.Log("무적모드 시작");
-        int countTime = 0;
-
-        //무적모드 플래그 t 변경
-        isUnBeatTime = true;
-
-        //대시 시 무적모드 
-        if (isDash)
+        //대쉬 딜레이
+        IEnumerator DashDelay()
         {
-            while (countTime < 5)
+            yield return new WaitForSeconds(delayTime);
+            isDelay = false;
+        }
+
+        //대쉬 중 무적
+        IEnumerator UnBeatTime()
+        {
+            Debug.Log("무적모드 시작");
+            int countTime = 0;
+
+            //무적모드 플래그 t 변경
+            isUnBeatTime = true;
+
+            //대시 시 무적모드 
+            if (isDash)
             {
-                //0.5초간 딜레이
-                yield return new WaitForSeconds(0.1f);
-                countTime++;
+                while (countTime < 5)
+                {
+                    //0.5초간 딜레이
+                    yield return new WaitForSeconds(0.1f);
+                    countTime++;
+                }
+            }
+            //피격 시 무적모드
+            else if (beShot)
+            {
+                while (countTime < 30)
+                {
+                    //알파값 수정해서 깜빡이도록 
+                    if (countTime % 2 == 0)
+                        spriteRenderer.color = new Color32(255, 255, 255, 90);
+                    else
+                        spriteRenderer.color = new Color32(255, 255, 255, 180);
+                    //3초간 딜레이
+                    yield return new WaitForSeconds(0.1f);
+                    countTime++;
+                }
+            }
+
+            //알파값 원상 복귀
+            spriteRenderer.color = new Color32(255, 255, 255, 255);
+
+            //무적모드 아님
+            isUnBeatTime = false;
+            Debug.Log("무적모드 종료");
+
+            yield return null;
+        }
+
+        /*체력, 체력바 위치 송수신
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                // We own this player: send the others our data
+                stream.SendNext(IsFiring);
+            }
+            else
+            {
+                // Network player, receive data
+                this.IsFiring = (bool)stream.ReceiveNext();
+            }
+
+        }*/
+
+        // 내 컴퓨터+다른 사용자 컴퓨터에 함수 실행 요청
+        [PunRPC]
+        void FlipImg(int n)
+        {
+            spriteRenderer.flipX = n == 1;
+        }
+
+        // 속도 향상을 위해 OnPhotonSerializeView로 바꿔야함
+        [PunRPC]
+        void MoveBar()
+        {
+            //hp_bar 이동 범위 제한 함으로써 아르마딜로 오브젝트를 따라다니게 함
+            if (currentHealth != 0)
+            {
+                HpBar.transform.position = Camera.main.WorldToScreenPoint(pv.transform.position + new Vector3(-0.02f, 0.5f, 0));
             }
         }
-        //피격 시 무적모드
-        else if (beShot)
+
+        [PunRPC]
+        void NotDestroy()
         {
-            while (countTime < 30)
-            {
-                //알파값 수정해서 깜빡이도록 
-                if (countTime % 2 == 0)
-                    spriteRenderer.color = new Color32(255, 255, 255, 90);
-                else
-                    spriteRenderer.color = new Color32(255, 255, 255, 180);
-                //3초간 딜레이
-                yield return new WaitForSeconds(0.1f);
-                countTime++;
-            }
+            DontDestroyOnLoad(this.gameObject);
         }
-
-        //알파값 원상 복귀
-        spriteRenderer.color = new Color32(255, 255, 255, 255);
-
-        //무적모드 아님
-        isUnBeatTime = false;
-        Debug.Log("무적모드 종료");
-
-        yield return null;
-    }
-
-    /*체력, 체력바 위치 송수신
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            // We own this player: send the others our data
-            stream.SendNext(IsFiring);
-        }
-        else
-        {
-            // Network player, receive data
-            this.IsFiring = (bool)stream.ReceiveNext();
-        }
-
-    }*/
-
-    // 내 컴퓨터+다른 사용자 컴퓨터에 함수 실행 요청
-    [PunRPC]
-    void FlipImg(int n)
-    {
-        spriteRenderer.flipX = n == 1;
-    }
-
-    // 속도 향상을 위해 OnPhotonSerializeView로 바꿔야함
-    [PunRPC]
-    void MoveBar()
-    {
-        //hp_bar 이동 범위 제한 함으로써 아르마딜로 오브젝트를 따라다니게 함
-        if (currentHealth != 0)
-        {
-            HpBar.transform.position = Camera.main.WorldToScreenPoint(pv.transform.position + new Vector3(-0.02f, 0.5f, 0));
-        }
-    }
-
-    [PunRPC]
-    void NotDestroy()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
 }
