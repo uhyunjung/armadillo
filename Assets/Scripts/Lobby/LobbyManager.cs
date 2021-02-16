@@ -129,7 +129,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //선택한 방에 참가
     void OnClickRoom(string roomName)
     {
-        PhotonNetwork.JoinRoom(roomName, null);
+        if(PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.JoinRoom(roomName, null);
+        }
     }
 
     //새로운 방을 만든 후 참가

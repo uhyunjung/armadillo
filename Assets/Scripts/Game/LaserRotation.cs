@@ -6,7 +6,6 @@ using Photon.Pun;
 
 public class LaserRotation : MonoBehaviour
 {
-
     /*
         탄환 2번 스크립트입니다.
         레이저 각도 계산 및 적용에 관련된 스크립트입니다.
