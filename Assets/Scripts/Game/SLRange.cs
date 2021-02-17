@@ -12,7 +12,7 @@ public class SLRange : MonoBehaviour
     public PhotonView pv;
     public PhotonView pvLaser;
 
-    private bool check = true;
+    public bool check = true;
     SpriteRenderer rangesr;
 
     void Update()
@@ -30,7 +30,7 @@ public class SLRange : MonoBehaviour
                         if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
                         {
                             gameObject.GetComponent<LaserRotation>().isFinish = false;
-                            pv.RPC("FadeIn", RpcTarget.All, 2f);
+                            pv.RPC("FadeIn", RpcTarget.All, 1f);
                         }
                     }
                 }
@@ -68,7 +68,6 @@ public class SLRange : MonoBehaviour
             yield return null;
         }
 
-        check = true;
         pvLaser.RPC("Laser", RpcTarget.All, transform.rotation);
         this.transform.rotation = new Quaternion(0, 0, 0, 0);
     }

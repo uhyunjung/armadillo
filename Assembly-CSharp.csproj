@@ -104,8 +104,6 @@
     <Compile Include="Assets\Scripts\Room\ReadyBtn.cs" />
     <Compile Include="Assets\Scripts\Room\ReadyClick.cs" />
     <Compile Include="Assets\Scripts\Room\Room.cs" />
-    <Compile Include="Assets\Scripts\Room\playerMatch.cs" />
-    <Compile Include="Assets\Scripts\SceneMoveManage.cs" />
     <Compile Include="Assets\Scripts\Setting\SettingUI.cs" />
     <Compile Include="Assets\Scripts\Setting\SoundController.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />

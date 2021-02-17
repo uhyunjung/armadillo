@@ -5,16 +5,16 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class DashMove : MonoBehaviour
+public class DashMove : MonoBehaviour, IPunObservable
 {
     // 객체 식별하는 포톤뷰
     public PhotonView pv;
     Room room;
 
     //max 체력과 현재 체력 변수
-    public int maxHealth = 100;
-    public int currentHealth;
-    int shotHealth = 10;  //피격 시 감소 체력, 10번 피격 시 죽음, 25에서 10으로
+    public float maxHealth = 120f;
+    public float currentHealth;
+    float shotHealth = 10f;  //피격 시 감소 체력, 10번 피격 시 죽음, 25에서 10으로
 
     public Vector2 speed_vec; //플레이어 속도 벡터
     public float speed; //이동 속도
@@ -37,6 +37,7 @@ public class DashMove : MonoBehaviour
     public Slider HpBar;
     public GameObject fillArea;
     bool isBoss = false;
+    Vector3 worldpos;
 
     void Start()
     {
@@ -71,12 +72,7 @@ public class DashMove : MonoBehaviour
                 }
 
                 // 맵 밖으로 못나가게
-                Vector3 worldpos = Camera.main.WorldToViewportPoint(this.transform.position);
-                if (worldpos.x < 0.1f) worldpos.x = 0.1f;
-                if (worldpos.y < 0f) worldpos.y = 0f;
-                if (worldpos.x > 0.9f) worldpos.x = 0.9f;
-                if (worldpos.y > 1f) worldpos.y = 1f;
-                this.transform.position = Camera.main.ViewportToWorldPoint(worldpos);
+                pv.RPC("setPosition", RpcTarget.All);
 
                 //체력 체크해서 죽음 판정
                 if (currentHealth == 0)
@@ -154,6 +150,17 @@ public class DashMove : MonoBehaviour
                 pv.RPC("MoveBar", RpcTarget.All);
             }
         }
+    }
+
+    [PunRPC]
+    void setPosition()
+    {
+        worldpos = Camera.main.WorldToViewportPoint(this.transform.position);
+        if (worldpos.x < 0.125f) worldpos.x = 0.125f;
+        if (worldpos.y < 0f) worldpos.y = 0f;
+        if (worldpos.x > 0.875f) worldpos.x = 0.875f;
+        if (worldpos.y > 1f) worldpos.y = 1f;
+        this.transform.position = Camera.main.ViewportToWorldPoint(worldpos);
     }
 
     [PunRPC]
@@ -271,7 +278,7 @@ public class DashMove : MonoBehaviour
         //피격 시 무적모드
         else if (beShot)
         {
-            while (countTime < 30)
+            while (countTime < 20)
             {
                 //알파값 수정해서 깜빡이도록 
                 if (countTime % 2 == 0)
@@ -316,5 +323,17 @@ public class DashMove : MonoBehaviour
     void NotDestroy()
     {
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(worldpos);
+        }
+        else
+        {
+            this.worldpos = (Vector3)stream.ReceiveNext();
+        }
     }
 }

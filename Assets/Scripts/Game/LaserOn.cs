@@ -48,6 +48,7 @@ public class LaserOn : MonoBehaviour
         tempColor.a = 0f;
         rangesr.color = tempColor;
         this.transform.rotation = new Quaternion(0, 0, 0, 0);
+        LaserRotationObj.GetComponent<SLRange>().check = true;
         LaserRotationObj.GetComponent<LaserRotation>().isFinish = true;
         yield return null;
     }
