@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class LaserRotation : MonoBehaviour
 {
+
+
     /*
         탄환 2번 스크립트입니다.
         레이저 각도 계산 및 적용에 관련된 스크립트입니다.
@@ -90,6 +92,7 @@ public class LaserRotation : MonoBehaviour
             yield return null;
         }
         GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
+        yield return new WaitForSeconds(1);   // 1초 delay
         check = true;
     }
 }

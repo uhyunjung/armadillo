@@ -14,7 +14,6 @@ public class SLRange : MonoBehaviour
 
     private bool check = true;
     public float timer;
-    public int waitingTime;
 
     SpriteRenderer rangesr;
     //public GameObject SLRng;
@@ -43,14 +42,13 @@ public class SLRange : MonoBehaviour
         armManager.GetComponent<ArmManager>().setColorZero();
         rangesr.color = tempColor;
         this.transform.rotation = new Quaternion(0, 0, 0, 0);
+        yield return new WaitForSeconds(1);                 // 실제로 레이저가 켜지는 1초동안 대기
         check = true;
     }
 
     void Start()
     {
         timer = 0.0F;
-        waitingTime = 2;
-        //SLRng = GameObject.Find("StageLightRange");
     }
 
     void Update()
@@ -69,11 +67,6 @@ public class SLRange : MonoBehaviour
                         {
                             pv.RPC("FadeIn", RpcTarget.All, 2f);
                             timer += Time.deltaTime;
-                            if (timer > waitingTime)
-                            {
-                                //Action
-                                //SLRng.SetActive(false);
-                            }
                         }
                     }
                 }
