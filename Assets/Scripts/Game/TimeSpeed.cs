@@ -62,7 +62,7 @@ public class TimeSpeed : MonoBehaviour
         if (selectMode == 1)
         {
             ct.isFastSpeed = true;
-            Time.timeScale = 2f;
+            Time.timeScale = 1.5f;
             spriteRenderer.sprite = FastSprite;
         }
         // 1배속

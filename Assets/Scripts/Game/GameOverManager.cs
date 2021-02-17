@@ -9,14 +9,10 @@ using Photon.Realtime;
 public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
 {
 
-     // 현재 코드가 정상적인 실행을 막을 정도로 문제가 많기에
-     // GameManager 오브젝트에서 잠시 분리했습니다 ㅠ.ㅠ
-
-
     public PhotonView pv;
 
     // 아래 두 변수(TimeLimit, Returncount)는 deltaTime이 정상적으로 작동하는 것을 확인할 경우 사용함
-    private float TimeLimit = 50.0F;                // 제한시간 count
+    private float TimeLimit = 30.0F;                // 제한시간 count
     private float Returncount = 5.0F;            // 게임 종료 후 룸으로 복귀하는 동안의 시간 count
 
     private bool gameovercheck = false;     // 로비 복귀를 발동시키는 플래그 변수
@@ -38,7 +34,7 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
     public void Start()
     {
         Time.timeScale = 1;                  // 게임 배속 초기화 
-        TimeLimit = 50.0F;                  // 스테이지 제한시간은 50초
+        TimeLimit = 30.0F;                  // 스테이지 제한시간은 50초
         Returncount = 5.0F;                 // 게임 종료 이미지를 표시하는 시간 5초
 
         if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
@@ -151,7 +147,7 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                yield return new WaitForSeconds(50f);
+                yield return new WaitForSeconds(30f);
 
                 gameovercheck = true;                                // 로비 복귀를 위해 플래그를 true로 전환
             }
