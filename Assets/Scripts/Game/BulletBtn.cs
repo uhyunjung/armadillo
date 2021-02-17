@@ -47,7 +47,7 @@ public class BulletBtn : MonoBehaviour
             toggles[num].isOn = false;
             num = n;                                                                  // 선택한 탄막 번호 저장
 
-            while (time < 5)
+            while (time < 3)
             {
                 time += Time.deltaTime;
                 yield return null;

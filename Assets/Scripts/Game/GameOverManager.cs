@@ -8,7 +8,6 @@ using Photon.Realtime;
 
 public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-
     public PhotonView pv;
 
     // 아래 두 변수(TimeLimit, Returncount)는 deltaTime이 정상적으로 작동하는 것을 확인할 경우 사용함
@@ -22,7 +21,7 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
     public Text Returntext;               // "다시 룸으로 이동합니다..." 텍스트
     public GameObject BossWin;              // 보스 유저 승리 시 나타나는 이미지
     public GameObject ArmadilloWin;         // 아르마딜로 유저 승리 시 나타나는 이미지
- 
+    
     public void Awake()
     {
         PhotonNetwork.SendRate = 100;
@@ -34,7 +33,7 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
     public void Start()
     {
         Time.timeScale = 1;                  // 게임 배속 초기화 
-        TimeLimit = 30.0F;                  // 스테이지 제한시간은 50초
+        TimeLimit = 50.0F;                  // 스테이지 제한시간은 50초
         Returncount = 5.0F;                 // 게임 종료 이미지를 표시하는 시간 5초
 
         if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
@@ -52,30 +51,29 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                // 사람 수 적음
-                if ((PhotonNetwork.PlayerList.Length < GameObject.Find("RoomManager").GetComponent<Room>().readyCnt) || (GameObject.Find("RoomManager").GetComponent<Room>().checkBoss.Count == 0))
+                if(GameObject.Find("RoomManager")!=null)
                 {
-                    PhotonNetwork.OpCleanActorRpcBuffer(PhotonNetwork.LocalPlayer.ActorNumber);
-                    PhotonNetwork.DestroyAll();
-                    if (PhotonNetwork.InRoom)
+                    // 사람 수 적음
+                    if ((PhotonNetwork.PlayerList.Length < GameObject.Find("RoomManager").GetComponent<Room>().readyCnt) || (GameObject.Find("RoomManager").GetComponent<Room>().checkBoss.Count == 0))
                     {
-                        PhotonNetwork.LeaveRoom();
+                        PhotonNetwork.OpCleanActorRpcBuffer(PhotonNetwork.LocalPlayer.ActorNumber);
+                        PhotonNetwork.DestroyAll();
+                        if (PhotonNetwork.InRoom)
+                        {
+                            PhotonNetwork.LeaveRoom();
+                        }
                     }
-                }
 
-                // 모든 유저가 사망했을 경우
-                if (GameObject.Find("RoomManager").GetComponent<Room>().checkBoss.Count == PhotonNetwork.PlayerList.Length + 1)
-                {
-                    PhotonNetwork.OpCleanActorRpcBuffer(PhotonNetwork.LocalPlayer.ActorNumber);
-                    PhotonNetwork.DestroyAll();
-                    pv.RPC("BossWinUI", RpcTarget.All);
-                }
-                // 제한시간이 모두 지남
-                if (gameovercheck)
-                {
-                    PhotonNetwork.OpCleanActorRpcBuffer(PhotonNetwork.LocalPlayer.ActorNumber);
-                    PhotonNetwork.DestroyAll();
-                    pv.RPC("ArmWinUI", RpcTarget.All);
+                    // 모든 유저가 사망했을 경우
+                    if (GameObject.Find("RoomManager").GetComponent<Room>().checkBoss.Count == PhotonNetwork.PlayerList.Length + 1)
+                    {
+                        pv.RPC("BossWinUI", RpcTarget.All);
+                    }
+                    // 제한시간이 모두 지남
+                    if (gameovercheck)
+                    {
+                        pv.RPC("ArmWinUI", RpcTarget.All);
+                    }
                 }
             }
         }
@@ -90,10 +88,18 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
     // 보스유저 승리화면 출력 코루틴
     IEnumerator CoBossWin()
     {
+        PhotonNetwork.OpCleanActorRpcBuffer(PhotonNetwork.LocalPlayer.ActorNumber);
+        yield return new WaitForSeconds(0.1f);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.DestroyAll();
+        }
+        
         Time.timeScale = 1;                                                  // 배속 원상복귀 (3번 탄막을 사용하고 있는 경우에 대응하여)
         Winningtext.text = "            유령 Win!\n[ 유령들이 방송국을 점거했다 ... ]";
         Returntext.text = "스테이지를 종료합니다...";
         BossWin.SetActive(true);
+
         yield return new WaitForSeconds(5f);                                 // 5초간 결과화면 표시
 
         if (PhotonNetwork.IsMasterClient)
@@ -114,6 +120,13 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
 
     IEnumerator CoArmWin()
     {
+        PhotonNetwork.OpCleanActorRpcBuffer(PhotonNetwork.LocalPlayer.ActorNumber);
+        yield return new WaitForSeconds(0.1f);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.DestroyAll();
+        }
+
         // 50초가 경과할 동안 다른 메서드(인원 수 부족, 모두 보스가 됨)가 실행되지 않은 경우
         // 아르마딜로 승리
         Time.timeScale = 1;                                          // 배속 원상복귀 (3번 탄막을 사용하고 있는 경우에 대응하여)
@@ -144,10 +157,18 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
+            while (TimeLimit > 0)
+            {
+                TimeLimit -= Time.deltaTime;
+                Timertext.text = ((int)TimeLimit).ToString();
+
+                yield return null;
+            }
+
+            TimeLimit = 50f;
+
             if (PhotonNetwork.IsMasterClient)
             {
-                yield return new WaitForSeconds(30f);
-
                 gameovercheck = true;                                // 로비 복귀를 위해 플래그를 true로 전환
             }
         }

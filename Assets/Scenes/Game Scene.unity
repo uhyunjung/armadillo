@@ -976,7 +976,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents: []
-  viewIdField: 11
+  viewIdField: 27
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &156955080
@@ -1131,8 +1131,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1140, y: -550}
-  m_SizeDelta: {x: 1280, y: 200}
+  m_AnchoredPosition: {x: 815, y: -474}
+  m_SizeDelta: {x: 200.03296, y: 86.1228}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &202553950
 MonoBehaviour:
@@ -1155,12 +1155,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a67b927a94072c54b8f3d1e1593ce38f, type: 3}
-    m_FontSize: 55
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 5
-    m_MaxSize: 55
-    m_Alignment: 0
+    m_MaxSize: 300
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1839,7 +1839,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents: []
-  viewIdField: 12
+  viewIdField: 28
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &404996587
@@ -2004,6 +2004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pv: {fileID: 539616344}
   pvLaser: {fileID: 896760684}
+  check: 1
 --- !u!114 &539616347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3515,7 +3516,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents: []
-  viewIdField: 2
+  viewIdField: 25
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &973531122
@@ -3766,7 +3767,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents: []
-  viewIdField: 3
+  viewIdField: 26
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &1071641419
@@ -4332,6 +4333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pv: {fileID: 1161041938}
   pvLaser: {fileID: 1870571516}
+  check: 1
 --- !u!114 &1161041941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5502,6 +5504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mousePosition: {x: 0, y: 0, z: 0}
   cnt: 0
+  isFinish: 0
   skillRange: {fileID: 0}
 --- !u!212 &1692980687
 SpriteRenderer:

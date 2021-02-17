@@ -20,7 +20,7 @@ public class LaserRotation : MonoBehaviour
     bool check = true;
     Vector2 target, mouse;
 
-    public bool isFinish = false;
+    public bool isFinish = true;
 
     private void Start()
     {
@@ -77,6 +77,7 @@ public class LaserRotation : MonoBehaviour
 
     IEnumerator Cooltime()
     {
+        check = false;
         //레이저 발동시간 내 카메라 흔들기 및 각도 고정
         while (true)
         {
@@ -86,9 +87,11 @@ public class LaserRotation : MonoBehaviour
             {
                 GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
                 isFinish = false;
+                check = true;
                 break;
             }
             yield return null;
         }
+        check = true;
     }
 }

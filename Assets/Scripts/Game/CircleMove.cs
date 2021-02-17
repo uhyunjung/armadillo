@@ -8,6 +8,7 @@ using Photon.Pun;
 public class CircleMove : MonoBehaviour
 {
     public PhotonView pv;
+    public GameObject obj;
 
     SpriteRenderer circleSprite;       // 원형 탄막 스프라이트
     Vector3 scale;                     // 원형 탄막 스프라이트 크기
@@ -36,6 +37,10 @@ public class CircleMove : MonoBehaviour
     void Start()
     {
         bulletSprite = new SpriteRenderer[circleBulletNum];
+        if(GameObject.Find("CircleMouse")!=null)
+        {
+            GameObject.Find("CircleMouse").GetComponent<CircleMouse>().isFinish = false;
+        }
         pv.RPC("startBullet", RpcTarget.All);
     }
 

@@ -10,6 +10,11 @@ public class StartManager : MonoBehaviour
     public Button setting;
     public Button finish;
 
+    public void Start()
+    {
+        Screen.SetResolution(1920, 1080, true);
+    }
+
     // 로비 이동
     public void OnStartClick()
     {
