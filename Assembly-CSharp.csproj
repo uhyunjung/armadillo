@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\Game\DashMove.cs" />
     <Compile Include="Assets\Scripts\Game\FlashRange.cs" />
     <Compile Include="Assets\Scripts\Game\GameOverManager.cs" />
+    <Compile Include="Assets\Scripts\Game\LaserOn.cs" />
     <Compile Include="Assets\Scripts\Game\LaserRotation.cs" />
     <Compile Include="Assets\Scripts\Game\SLRange.cs" />
     <Compile Include="Assets\Scripts\Game\SLRotate.cs" />

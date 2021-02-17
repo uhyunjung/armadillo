@@ -1932,7 +1932,7 @@ GameObject:
   - component: {fileID: 539616343}
   m_Layer: 0
   m_Name: RightLager_Range
-  m_TagString: bullet
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1945,7 +1945,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539616341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.49, y: -0.03, z: 0.5885877}
+  m_LocalPosition: {x: 16.49, y: -0.03, z: 0}
   m_LocalScale: {x: 1, y: 2.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2067155617}
@@ -2003,8 +2003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 539616344}
-  armManager: {fileID: 326666397}
-  timer: 0
+  pvLaser: {fileID: 896760684}
 --- !u!114 &539616347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2018,7 +2017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 539616344}
-  cool: 1
+  isFinish: 0
 --- !u!212 &539616348
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3152,10 +3151,10 @@ GameObject:
   m_Component:
   - component: {fileID: 896760681}
   - component: {fileID: 896760686}
-  - component: {fileID: 896760685}
   - component: {fileID: 896760684}
   - component: {fileID: 896760683}
   - component: {fileID: 896760682}
+  - component: {fileID: 896760685}
   m_Layer: 0
   m_Name: RightLager
   m_TagString: bullet
@@ -3171,7 +3170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896760680}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.49, y: -0.029999971, z: 0.5885877}
+  m_LocalPosition: {x: 16.49, y: -0.029999971, z: 0}
   m_LocalScale: {x: 1, y: 2.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1146973088}
@@ -3190,9 +3189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 896760684}
-  LaserOnManager: {fileID: 0}
-  timer: 0
-  waitingTime: 0
+  armManager: {fileID: 326666397}
+  LaserRotationObj: {fileID: 539616341}
 --- !u!114 &896760683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3232,20 +3230,32 @@ MonoBehaviour:
   viewIdField: 19
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &896760685
-MonoBehaviour:
+--- !u!61 &896760685
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896760680}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dc79c5fb7698045b90a66a582c1c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pv: {fileID: 896760684}
-  cool: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65999997, y: 23.713684}
+    newSize: {x: 23.713684, y: 0.65999997}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.65999997, y: 23.713684}
+  m_EdgeRadius: 0
 --- !u!212 &896760686
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4250,7 +4260,7 @@ GameObject:
   - component: {fileID: 1161041937}
   m_Layer: 0
   m_Name: LeftLager_Range
-  m_TagString: bullet
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4263,7 +4273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161041935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.03, y: -0.17, z: 0.5885877}
+  m_LocalPosition: {x: 1.03, y: -0.17, z: 0}
   m_LocalScale: {x: 1, y: 2.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2067155617}
@@ -4321,8 +4331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1161041938}
-  armManager: {fileID: 375072345}
-  timer: 0
+  pvLaser: {fileID: 1870571516}
 --- !u!114 &1161041941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4336,7 +4345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1161041938}
-  cool: 1
+  isFinish: 0
 --- !u!212 &1161041942
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6075,10 +6084,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1870571513}
   - component: {fileID: 1870571518}
-  - component: {fileID: 1870571517}
   - component: {fileID: 1870571516}
   - component: {fileID: 1870571515}
   - component: {fileID: 1870571514}
+  - component: {fileID: 1870571517}
   m_Layer: 0
   m_Name: LeftLager
   m_TagString: bullet
@@ -6094,7 +6103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1870571512}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0299997, y: -0.16999996, z: 0.5885877}
+  m_LocalPosition: {x: 1.0299997, y: -0.16999996, z: 0}
   m_LocalScale: {x: 1, y: 2.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1146973088}
@@ -6113,9 +6122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1870571516}
-  LaserOnManager: {fileID: 0}
-  timer: 0
-  waitingTime: 0
+  armManager: {fileID: 375072345}
+  LaserRotationObj: {fileID: 1161041935}
 --- !u!114 &1870571515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6155,20 +6163,32 @@ MonoBehaviour:
   viewIdField: 7
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1870571517
-MonoBehaviour:
+--- !u!61 &1870571517
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1870571512}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dc79c5fb7698045b90a66a582c1c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pv: {fileID: 1870571516}
-  cool: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65999997, y: 23.713684}
+    newSize: {x: 23.713684, y: 0.65999997}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.65999997, y: 23.713684}
+  m_EdgeRadius: 0
 --- !u!212 &1870571518
 SpriteRenderer:
   m_ObjectHideFlags: 0
