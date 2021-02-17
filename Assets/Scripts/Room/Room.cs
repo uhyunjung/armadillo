@@ -25,7 +25,7 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     public Vector3[] bossPos;
 
     int cnt;                    // Ready한 사용자 수
-    int readyCnt=3;             // 게임 시작 인원 조건 3명
+    public int readyCnt=3;             // 게임 시작 인원 조건 3명
     float time;                 // 카운트다운 5초
 
     public List<int> checkBoss;        // 보스되었는지 확인
@@ -62,34 +62,6 @@ public class Room : MonoBehaviourPunCallbacks, IPunObservable
     {
         checkBoss.Clear();
         StartCoroutine("CreatePlayer");
-    }
-
-    public void Update()
-    {
-        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                // 사람 수 적음
-                if ((PhotonNetwork.PlayerList.Length < readyCnt) || (checkBoss.Count == 0))
-                {
-                    PhotonNetwork.DestroyAll();
-                    if (PhotonNetwork.InRoom)
-                    {
-                        PhotonNetwork.LeaveRoom();
-                    }
-                }
-                else if (checkBoss.Count == PhotonNetwork.PlayerList.Length + 1)             // 게임 종료
-                {
-                    // 모두 보스됨
-                    PhotonNetwork.DestroyAll();
-                    if (PhotonNetwork.InRoom)
-                    {
-                        PhotonNetwork.LeaveRoom();
-                    }
-                }
-            } 
-        }  
     }
 
     // 아르마딜로 생성
