@@ -8,6 +8,7 @@ public class right_move : MonoBehaviour
 {
     public PhotonView pv;
     int cnt = 8;
+    float cool = 2.0f; //카메라 흔들기
 
     Vector2 MousePosition;
     Vector3 originPos;
@@ -69,8 +70,6 @@ public class right_move : MonoBehaviour
                                     {
                                         leftAmp.SetActive(false);
                                         pv.RPC("startSkill", RpcTarget.All);
-                                        pv.RPC("random_bullet", RpcTarget.All);
-                                        //StartCoroutine("skill_start");
                                         pv.RPC("endingSkill", RpcTarget.All);
                                         //Invoke("skillEnd", 5);
                                     }
@@ -101,15 +100,17 @@ public class right_move : MonoBehaviour
         }
         ArmspriteRenderer.color = new Color(ArmspriteRenderer.color.r, ArmspriteRenderer.color.g, ArmspriteRenderer.color.b, 1f);
         Debug.Log("2. 알파값 변화 종료");
-        // Camera.main.GetComponent<cameraShake>().ShakeCamera(1.0f); 코드 질문
+
+        StartCoroutine(Cooltime(cool));
         random_bullet();
+
         Debug.Log("왼쪽 문어발 등장");
 
     }
     [PunRPC]
     public void endingSkill()
     {
-        Invoke("skillEnd", 8);
+        Invoke("skillEnd", 5);
     }
     public void skillEnd()
     {
@@ -121,6 +122,7 @@ public class right_move : MonoBehaviour
     }
     IEnumerator skill_end()
     {
+
         Debug.Log("1. 알파값 변화 시작");
 
         for (float i = 1f; i >= 0f; i -= 0.1f)
@@ -134,9 +136,22 @@ public class right_move : MonoBehaviour
         RangespriteRenderer.color = new Color(ArmspriteRenderer.color.r, ArmspriteRenderer.color.g, ArmspriteRenderer.color.b, 0f);
 
         Debug.Log("2. 알파값 변화 종료");
-
+        Debug.Log("오른쪽 문어발 사라짐");
     }
     //탄막 랜덤 생성 함수
+    IEnumerator Cooltime(float cool)
+    {
+        //레이저 발동시간 내 카메라 흔들기 및 각도 고정
+        //check = false;
+        while (cool > 0.0f)
+        {
+            cool -= Time.deltaTime;
+            GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
+            yield return null;
+        }
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
+        //check = true;
+    }
 
     [PunRPC]
     public void random_bullet()
@@ -146,8 +161,8 @@ public class right_move : MonoBehaviour
         {
             //크기 좌표(x,y) 오브젝트 랜덤으로 설정
             float randomS = UnityEngine.Random.Range(0.4f, 0.8f);
-            float randomX = UnityEngine.Random.Range(11f, 12f);
-            float randomY = UnityEngine.Random.Range(2f, 3f);
+            float randomX = UnityEngine.Random.Range(7.5f, 8f);
+            float randomY = UnityEngine.Random.Range(1f, 2f);
             int randomO = UnityEngine.Random.Range(0, prefab.Length);
 
 
@@ -158,7 +173,7 @@ public class right_move : MonoBehaviour
 
             obj.transform.SetParent(ArmspriteRenderer.transform, true);
             obj.transform.localScale = new Vector3(randomS, randomS, 0);
-            obj.GetComponent<Rigidbody2D>().gravityScale = UnityEngine.Random.Range(0.5f, 1.0f); //3
+            obj.GetComponent<Rigidbody2D>().gravityScale = UnityEngine.Random.Range(0.8f, 1.5f); //3
 
 
             bulletList.Add(obj);

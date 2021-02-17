@@ -110,6 +110,8 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 11282}
+    - Class: 114
       Script: {instanceID: 11284}
     - Class: 114
       Script: {instanceID: 11316}
@@ -162,6 +164,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14944}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -2060,6 +2064,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 4eb1b00dc9339cd4e320f661aeafd9d3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameOverManager
   platform: 5
   scenePathNames:
   - Assets/Scenes/Start Scene.unity
@@ -2067,5 +2077,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Lobby Scene.unity
   - Assets/Scenes/Room Scene.unity
   - Assets/Scenes/Game Scene.unity
-  playerPath: "C:/Users/yhyeo/OneDrive/\uBC14\uD0D5 \uD654\uBA74/\uC544\uB974\uB9C8\uB51C\uB85C/Armadilo
-    Develop.exe"
+  playerPath: "D:/\uAC9C\uC885\uB8CC\uBE4C\uB4DC/test3/Armadilo Develop.exe"
