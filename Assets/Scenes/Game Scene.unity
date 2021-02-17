@@ -4804,6 +4804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1454420464}
   - component: {fileID: 1454420465}
+  - component: {fileID: 1454420466}
   m_Layer: 0
   m_Name: GameOverManager
   m_TagString: Untagged
@@ -4843,10 +4844,29 @@ MonoBehaviour:
   observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1454420466}
   viewIdField: 17
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1454420466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454420463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79a67a48067971479ef041f0c3e9f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pv: {fileID: 1454420465}
+  Timertext: {fileID: 202553950}
+  Winningtext: {fileID: 793536096}
+  Returntext: {fileID: 666973551}
+  BossWin: {fileID: 686292075}
+  ArmadilloWin: {fileID: 1834967969}
 --- !u!1 &1485164871
 GameObject:
   m_ObjectHideFlags: 0
