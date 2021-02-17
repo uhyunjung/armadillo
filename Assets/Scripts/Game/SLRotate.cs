@@ -9,7 +9,7 @@ public class SLRotate : MonoBehaviour
     * 조명 스프라이트 회전 코드
     */
 
-    float rotateSpeed = -45f;
+    float rotateSpeed = -22.5f;
 
     // Start is called before the first frame update
     void Start()
