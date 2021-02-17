@@ -6,8 +6,6 @@ using Photon.Pun;
 
 public class LaserRotation : MonoBehaviour
 {
-
-
     /*
         탄환 2번 스크립트입니다.
         레이저 각도 계산 및 적용에 관련된 스크립트입니다.
@@ -21,9 +19,8 @@ public class LaserRotation : MonoBehaviour
     float stopAngle;
     bool check = true;
     Vector2 target, mouse;
-    Color color;
 
-    public float cool;
+    public bool isFinish = false;
 
     private void Start()
     {
@@ -45,8 +42,6 @@ public class LaserRotation : MonoBehaviour
 
                     if (bulletBtn)
                     {
-                        pv.RPC("disappear", RpcTarget.All);
-
                         mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                         angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;
 
@@ -75,24 +70,25 @@ public class LaserRotation : MonoBehaviour
     {
         stopAngle = angle;
         this.transform.rotation = Quaternion.AngleAxis(stopAngle - 90, Vector3.forward);
-        check = false;
 
         //코루틴 호출 함수
-        StartCoroutine(Cooltime(cool));
+        StartCoroutine(Cooltime());
     }
 
-    IEnumerator Cooltime(float cool)
+    IEnumerator Cooltime()
     {
         //레이저 발동시간 내 카메라 흔들기 및 각도 고정
-        check = false;
-        while (cool > 0.0f)
+        while (true)
         {
-            cool -= Time.deltaTime;
             GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
+
+            if(isFinish)
+            {
+                GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
+                isFinish = false;
+                break;
+            }
             yield return null;
         }
-        GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
-        yield return new WaitForSeconds(1);   // 1초 delay
-        check = true;
     }
 }

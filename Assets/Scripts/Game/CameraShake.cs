@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-
     public Camera mainCamera;
 
     public float ShakeTime;
     Vector3 initialPosition;
     Vector3 cameraPos;
-
 
     [SerializeField] [Range(0.01f, 0.1f)] float shakeRange = 0.01f;
 
@@ -41,6 +39,4 @@ public class CameraShake : MonoBehaviour
         initialPosition = new Vector3(0f, 0f, -10f);
         cameraPos = mainCamera.transform.position;
     }
-
-
 }

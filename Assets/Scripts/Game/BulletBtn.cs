@@ -19,6 +19,10 @@ public class BulletBtn : MonoBehaviour
         }
         toggles = bulletBtn.GetComponentsInChildren<Toggle>(false);          // 토글 버튼
         toggles[0].isOn = true;
+        if(gameObject.activeSelf)
+        {
+            StartCoroutine(chooseBullet(0));
+        }
     }
 
     void Update()
@@ -43,7 +47,7 @@ public class BulletBtn : MonoBehaviour
             toggles[num].isOn = false;
             num = n;                                                                  // 선택한 탄막 번호 저장
 
-            while (time < 3)
+            while (time < 5)
             {
                 time += Time.deltaTime;
                 yield return null;

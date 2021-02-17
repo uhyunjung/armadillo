@@ -12,7 +12,7 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
     public PhotonView pv;
 
     // 아래 두 변수(TimeLimit, Returncount)는 deltaTime이 정상적으로 작동하는 것을 확인할 경우 사용함
-    private float TimeLimit = 30.0F;                // 제한시간 count
+    private float TimeLimit = 50.0F;                // 제한시간 count
     private float Returncount = 5.0F;            // 게임 종료 후 룸으로 복귀하는 동안의 시간 count
 
     private bool gameovercheck = false;     // 로비 복귀를 발동시키는 플래그 변수
@@ -78,7 +78,6 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
                     pv.RPC("ArmWinUI", RpcTarget.All);
                 }
             }
-            Debug.Log(TimeLimit -= Time.deltaTime);
         }
     }
 
