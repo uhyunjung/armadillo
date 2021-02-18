@@ -36,7 +36,8 @@ public class LaserLotation_Left : MonoBehaviour
                 {
                     bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
 
-                    if (bulletBtn)
+                    int selectNum = bulletBtn.num;
+                    if (selectNum == 4)
                     {
                         mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                         angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;

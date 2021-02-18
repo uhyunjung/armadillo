@@ -21,14 +21,14 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
     public Text Returntext;               // "다시 룸으로 이동합니다..." 텍스트
     public GameObject BossWin;              // 보스 유저 승리 시 나타나는 이미지
     public GameObject ArmadilloWin;         // 아르마딜로 유저 승리 시 나타나는 이미지
-    
+
     public void Awake()
     {
         PhotonNetwork.SendRate = 100;
         PhotonNetwork.SerializationRate = 100;
         PhotonNetwork.AutomaticallySyncScene = true;    // sync
     }
-   
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -51,7 +51,7 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                if(GameObject.Find("RoomManager")!=null)
+                if (GameObject.Find("RoomManager") != null)
                 {
                     // 사람 수 적음
                     if ((PhotonNetwork.PlayerList.Length < GameObject.Find("RoomManager").GetComponent<Room>().readyCnt) || (GameObject.Find("RoomManager").GetComponent<Room>().checkBoss.Count == 0))
@@ -94,7 +94,7 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             PhotonNetwork.DestroyAll();
         }
-        
+
         Time.timeScale = 1;                                                  // 배속 원상복귀 (3번 탄막을 사용하고 있는 경우에 대응하여)
         Winningtext.text = "            유령 Win!\n[ 유령들이 방송국을 점거했다 ... ]";
         Returntext.text = "스테이지를 종료합니다...";
@@ -102,11 +102,11 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
 
         yield return new WaitForSeconds(5f);                                 // 5초간 결과화면 표시
 
-        if (PhotonNetwork.IsMasterClient)
+        if (GameObject.Find("RoomManager") != null)
         {
             PhotonNetwork.Destroy(GameObject.Find("RoomManager"));
-            PhotonNetwork.LoadLevel("Room Scene");
         }
+        SceneManager.LoadScene("Room Scene");
         PhotonNetwork.CurrentRoom.IsOpen = true;
         PhotonNetwork.CurrentRoom.IsVisible = true;
         Destroy(this.gameObject);
@@ -135,11 +135,11 @@ public class GameOverManager : MonoBehaviourPunCallbacks, IPunObservable
         Returntext.text = "스테이지를 종료합니다...";
         yield return new WaitForSeconds(5f);                        // 5초간 결과화면 표시  
 
-        if (PhotonNetwork.IsMasterClient)
+        if (GameObject.Find("RoomManager") != null)
         {
             PhotonNetwork.Destroy(GameObject.Find("RoomManager"));
-            PhotonNetwork.LoadLevel("Room Scene");
         }
+        SceneManager.LoadScene("Room Scene");
         PhotonNetwork.CurrentRoom.IsOpen = true;
         PhotonNetwork.CurrentRoom.IsVisible = true;
         Destroy(this.gameObject);
