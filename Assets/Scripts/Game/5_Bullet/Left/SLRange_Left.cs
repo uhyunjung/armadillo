@@ -9,7 +9,6 @@ public class SLRange_Left : MonoBehaviour
 {
     BulletBtn bulletBtn;  // 탄막 버튼 스크립트
     public PhotonView pv;
-    public PhotonView pvLaser;
 
     public bool check = true;
     SpriteRenderer rangesr;
@@ -34,7 +33,7 @@ public class SLRange_Left : MonoBehaviour
                         //왼쪽에 가까울때만 스킬 적용
                         if (Input.GetMouseButtonDown(0) && bulletBtn.num == 4 && check && MousePosition.x < 0)
                         {
-                            gameObject.GetComponent<LaserRotation>().isFinish = false;
+                            gameObject.GetComponent<LaserLotation_Left>().isFinish = false;
                             pv.RPC("FadeIn", RpcTarget.All, 1f);
                         }
                     }
@@ -73,7 +72,7 @@ public class SLRange_Left : MonoBehaviour
             yield return null;
         }
 
-        pvLaser.RPC("Laser", RpcTarget.All, transform.rotation);
         this.transform.rotation = new Quaternion(0, 0, 0, 0);
+        check = true;
     }
 }

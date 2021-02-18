@@ -129,6 +129,7 @@ public class WaveMaker : MonoBehaviour
     void setColor(int value)
     {
         spr = GetComponent<SpriteRenderer>();
+        color = spr.color;
         color.a = value;
         spr.color = color;
     }
