@@ -34,8 +34,6 @@ public class LeftSpeaker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
             if (GameObject.Find("RoomManager") != null)
@@ -57,7 +55,7 @@ public class LeftSpeaker : MonoBehaviour
                             if (Input.GetMouseButtonDown(0) && SpeakerRotation)
                             {
                                 SpeakerRotation = false;    //플래그
-                                Shooting_Routine(2.0f);     //코루틴을 호출합니다
+                                pv.RPC("Shooting_Routine", RpcTarget.All, 2f);     //코루틴을 호출합니다
                             }
                         }
                     }
@@ -76,11 +74,13 @@ public class LeftSpeaker : MonoBehaviour
     void setColor(int value)
     {
         spr = GetComponent<SpriteRenderer>();
+        color = spr.color;
         color.a = value;
         spr.color = color;
     }
 
 
+    [PunRPC]
     public void Shooting_Routine(float fadeTime)
     {
         StartCoroutine(CoShootingRoutine(fadeTime));
@@ -98,13 +98,6 @@ public class LeftSpeaker : MonoBehaviour
         pv.RPC("setColor", RpcTarget.All, 0);
     }
 
-
-    void startShooting()
-    {
-        Shooting_Routine(2f);
-    }
-
-   
     void callLaunch()
     {
         wv.setShootDir_left();

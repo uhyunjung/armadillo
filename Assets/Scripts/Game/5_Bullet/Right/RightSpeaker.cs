@@ -49,14 +49,13 @@ public class RightSpeaker : MonoBehaviour
                         MousePosition = Input.mousePosition;
                         MousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-
                         //마우스 클릭 & 오른쪽일 경우
                         if (MousePosition.x > 0 && SpeakerRotation)
                         {
                             if (Input.GetMouseButtonDown(0) && SpeakerRotation)
                             {
                                 SpeakerRotation = false;    //플래그
-                                Shooting_Routine(2.0f);     //코루틴을 호출합니다
+                                pv.RPC("Shooting_Routine", RpcTarget.All, 2f);     //코루틴을 호출합니다
                             }
                         }
                     }
@@ -70,11 +69,12 @@ public class RightSpeaker : MonoBehaviour
     void setColor(int value)
     {
         spr = GetComponent<SpriteRenderer>();
+        color = spr.color;
         color.a = value;
         spr.color = color;
     }
 
-
+    [PunRPC]
     public void Shooting_Routine(float fadeTime)
     {
         StartCoroutine(CoShootingRoutine(fadeTime));
@@ -89,12 +89,6 @@ public class RightSpeaker : MonoBehaviour
         yield return new WaitForSeconds(4);
         SpeakerRotation = true;
         pv.RPC("setColor", RpcTarget.All, 0);
-    }
-
-
-    void startShooting()
-    {
-        Shooting_Routine(2f);
     }
 
     void callLaunch()

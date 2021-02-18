@@ -1338,7 +1338,6 @@ GameObject:
   m_Component:
   - component: {fileID: 240282239}
   - component: {fileID: 240282245}
-  - component: {fileID: 240282244}
   - component: {fileID: 240282243}
   - component: {fileID: 240282242}
   - component: {fileID: 240282241}
@@ -1432,21 +1431,6 @@ MonoBehaviour:
   viewIdField: 33
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &240282244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 240282238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3e8bb0e7bb0854fb675ad56d78be76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pv: {fileID: 240282243}
-  pvLaser: {fileID: 240282243}
-  check: 1
 --- !u!212 &240282245
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1532,7 +1516,7 @@ MonoBehaviour:
   soundwave_center: {fileID: 1548916560}
   soundwave_up: {fileID: 463294778}
   soundwave_down: {fileID: 1480468018}
-  pv: {fileID: 363311571}
+  pv: {fileID: 272810119}
 --- !u!212 &272810117
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7052,7 +7036,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1332420857}
   - component: {fileID: 1332420863}
-  - component: {fileID: 1332420862}
   - component: {fileID: 1332420861}
   - component: {fileID: 1332420860}
   - component: {fileID: 1332420859}
@@ -7146,21 +7129,6 @@ MonoBehaviour:
   viewIdField: 35
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1332420862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332420856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3e8bb0e7bb0854fb675ad56d78be76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pv: {fileID: 1332420861}
-  pvLaser: {fileID: 1332420861}
-  check: 1
 --- !u!212 &1332420863
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7347,7 +7315,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1400461101}
   - component: {fileID: 1400461107}
-  - component: {fileID: 1400461106}
   - component: {fileID: 1400461105}
   - component: {fileID: 1400461104}
   - component: {fileID: 1400461103}
@@ -7441,21 +7408,6 @@ MonoBehaviour:
   viewIdField: 34
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1400461106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1400461100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3e8bb0e7bb0854fb675ad56d78be76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pv: {fileID: 1400461105}
-  pvLaser: {fileID: 1400461105}
-  check: 1
 --- !u!212 &1400461107
 SpriteRenderer:
   m_ObjectHideFlags: 0

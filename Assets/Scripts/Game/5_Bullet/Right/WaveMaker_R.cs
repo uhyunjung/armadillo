@@ -57,6 +57,7 @@ public class WaveMaker_R : MonoBehaviour
     void setColor(int value)
     {
         spr = GetComponent<SpriteRenderer>();
+        color = spr.color;
         color.a = value;
         spr.color = color;
     }
@@ -68,7 +69,6 @@ public class WaveMaker_R : MonoBehaviour
         shootdir = mouse - target;                                  //음파 발사 각도 계산
         stopAngle = angle;
     }
-
 
     public void setShootDir_right()
     {
@@ -100,14 +100,10 @@ public class WaveMaker_R : MonoBehaviour
         resetbull();
     }
 
-
-
-
     public void Launch(Vector2 Direction, float Speed)      //음파 발사함수
     {
         rb.AddForce(Direction * Speed);
     }
-
 
     void resetbull()
     {
@@ -126,9 +122,5 @@ public class WaveMaker_R : MonoBehaviour
         }
 
         gameObject.SetActive(false);
-
     }
-
-
-
 }
