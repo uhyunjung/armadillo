@@ -15,6 +15,10 @@ TagManager:
   - skillRangeR
   - skillRangeL
   - Room
+  - BulletBtn
+  - Laser_up
+  - Laser_center
+  - Laser_down
   layers:
   - Default
   - TransparentFX
