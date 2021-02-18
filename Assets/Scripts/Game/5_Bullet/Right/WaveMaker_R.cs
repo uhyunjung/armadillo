@@ -37,8 +37,8 @@ public class WaveMaker_R : MonoBehaviour
                 if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
                 {
                     bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-
-                    if (bulletBtn)
+                    int selectNum = bulletBtn.num;
+                    if (selectNum == 4)
                     {
                         checkPosition();
 
