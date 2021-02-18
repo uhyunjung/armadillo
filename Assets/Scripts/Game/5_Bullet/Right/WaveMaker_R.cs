@@ -18,7 +18,6 @@ public class WaveMaker_R : MonoBehaviour
     SpriteRenderer spr;
     Color color;
 
-
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -26,31 +25,6 @@ public class WaveMaker_R : MonoBehaviour
         first = new Vector2(7.58f, 1.48f);                 //지정
 
         pv.RPC("setColor", RpcTarget.All, 0);
-    }
-
-    private void Update()
-    {
-        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
-        {
-            if (GameObject.Find("RoomManager") != null)
-            {
-                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-                {
-                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-                    int selectNum = bulletBtn.num;
-                    if (selectNum == 4)
-                    {
-                        checkPosition();
-
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            checkPosition();
-                        }
-                    }
-                }
-            }
-        }
-
     }
 
     [PunRPC]
@@ -62,12 +36,13 @@ public class WaveMaker_R : MonoBehaviour
         spr.color = color;
     }
 
-    private void checkPosition()                                    //마우스 좌표 및 발사 각도,방향을 정하는 함수입니다
+    [PunRPC]
+    void checkPosition(Vector2 m, float q)                                    //마우스 좌표 및 발사 각도,방향을 정하는 함수입니다
     {
-        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);    //mouse 위치
-        angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;        //스프라이트 제어에 필요한 각도계산
-        shootdir = mouse - target;                                  //음파 발사 각도 계산
-        stopAngle = angle;
+        mouse = m;    //mouse 위치
+        angle = q;        //스프라이트 제어에 필요한 각도계산
+        shootdir = m - target;                                  //음파 발사 각도 계산
+        stopAngle = q;
     }
 
     public void setShootDir_right()
@@ -120,7 +95,10 @@ public class WaveMaker_R : MonoBehaviour
             setShootDir_right();                                //재호출
             power += 15.0f;
         }
-
+        if(GameObject.Find("RightLager_s")!=null)
+        {
+            GameObject.Find("RightLager_s").GetComponent<LaserLotation_Left>().isFinish = true;
+        }
         gameObject.SetActive(false);
     }
 }

@@ -923,7 +923,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 108355773}
-  pvLaser: {fileID: 108355773}
   check: 1
 --- !u!114 &108355771
 MonoBehaviour:
@@ -938,6 +937,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 108355773}
+  pv1: {fileID: 549525156}
+  pv2: {fileID: 1298855642}
+  pv3: {fileID: 1304824946}
   isFinish: 1
 --- !u!114 &108355772
 MonoBehaviour:
@@ -1376,7 +1378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 240282243}
-  pvLaser: {fileID: 240282243}
   check: 1
 --- !u!114 &240282241
 MonoBehaviour:
@@ -1391,6 +1392,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 240282243}
+  pv1: {fileID: 463294784}
+  pv2: {fileID: 1480468024}
+  pv3: {fileID: 1548916566}
   isFinish: 1
 --- !u!114 &240282242
 MonoBehaviour:
@@ -2509,7 +2513,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2011333770}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &463294780
 PolygonCollider2D:
@@ -4841,7 +4845,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 927619897}
-  pvLaser: {fileID: 927619897}
   check: 1
 --- !u!114 &927619895
 MonoBehaviour:
@@ -4856,6 +4859,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 927619897}
+  pv1: {fileID: 549525156}
+  pv2: {fileID: 1298855642}
+  pv3: {fileID: 1304824946}
   isFinish: 1
 --- !u!114 &927619896
 MonoBehaviour:
@@ -5319,7 +5325,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1076853601}
-  pvLaser: {fileID: 1076853601}
   check: 1
 --- !u!114 &1076853599
 MonoBehaviour:
@@ -5334,6 +5339,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1076853601}
+  pv1: {fileID: 549525156}
+  pv2: {fileID: 1298855642}
+  pv3: {fileID: 1304824946}
   isFinish: 1
 --- !u!114 &1076853600
 MonoBehaviour:
@@ -7074,7 +7082,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1332420861}
-  pvLaser: {fileID: 1332420861}
   check: 1
 --- !u!114 &1332420859
 MonoBehaviour:
@@ -7089,6 +7096,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1332420861}
+  pv1: {fileID: 0}
+  pv2: {fileID: 0}
+  pv3: {fileID: 0}
   isFinish: 1
 --- !u!114 &1332420860
 MonoBehaviour:
@@ -7353,7 +7363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1400461105}
-  pvLaser: {fileID: 1400461105}
   check: 1
 --- !u!114 &1400461103
 MonoBehaviour:
@@ -7368,6 +7377,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1400461105}
+  pv1: {fileID: 463294784}
+  pv2: {fileID: 1480468024}
+  pv3: {fileID: 1548916566}
   isFinish: 1
 --- !u!114 &1400461104
 MonoBehaviour:
@@ -7861,7 +7873,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2011333770}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &1480468020
 PolygonCollider2D:
@@ -8250,7 +8262,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2011333770}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &1548916562
 PolygonCollider2D:
@@ -10205,9 +10217,9 @@ RectTransform:
   - {fileID: 240282239}
   - {fileID: 1400461101}
   - {fileID: 1332420857}
+  - {fileID: 1548916561}
   - {fileID: 463294779}
   - {fileID: 1480468019}
-  - {fileID: 1548916561}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

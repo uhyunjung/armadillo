@@ -33,39 +33,14 @@ public class WaveMaker : MonoBehaviour
 
     }
 
-    private void Update()
+    [PunRPC]
+    void checkPosition(Vector2 m, float q)                                    //마우스 좌표 및 발사 각도,방향을 정하는 함수입니다
     {
-        if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
-        {
-            if (GameObject.Find("RoomManager") != null)
-            {
-                if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
-                {
-                    bulletBtn = GameObject.Find("BulletBtn").GetComponent<BulletBtn>();
-                    int selectNum = bulletBtn.num;
-                    if (selectNum == 4)
-                    {
-                        checkPosition();
-
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            checkPosition();
-                        }
-                    }
-                }
-            }
-        }
-        
+        mouse = m;    //mouse 위치
+        angle = q;        //스프라이트 제어에 필요한 각도계산
+        shootdir = m - target;                                  //음파 발사 각도 계산
+        stopAngle = q;
     }
-
-    private void checkPosition()                                    //마우스 좌표 및 발사 각도,방향을 정하는 함수입니다
-    {
-        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);    //mouse 위치
-        angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;        //스프라이트 제어에 필요한 각도계산
-        shootdir = mouse - target;                                  //음파 발사 각도 계산
-        stopAngle = angle;
-    }
-
 
     public void setShootDir_left()                                  //왼쪽 음파 발사 함수
     {

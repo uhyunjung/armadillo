@@ -12,6 +12,7 @@ public class SLRange : MonoBehaviour
     public PhotonView pv;
     public PhotonView pvLaser;
 
+    public bool check = true;
     SpriteRenderer rangesr;
 
     void Update()
@@ -26,8 +27,9 @@ public class SLRange : MonoBehaviour
 
                     if (bulletBtn)
                     {
-                        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && gameObject.GetComponent<LaserRotation>().check)
+                        if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
                         {
+                            gameObject.GetComponent<LaserRotation>().isFinish = false;
                             pv.RPC("FadeIn", RpcTarget.All, 1f);
                         }
                     }
@@ -44,8 +46,7 @@ public class SLRange : MonoBehaviour
 
     IEnumerator CoFadeIn(float fadeOutTime)  // 2초 스킬 범위
     {
-        gameObject.GetComponent<LaserRotation>().check = false;
-        gameObject.GetComponent<LaserRotation>().isFinish = false;
+        check = false;
         rangesr = this.gameObject.GetComponent<SpriteRenderer>();
 
         // 투명도 0

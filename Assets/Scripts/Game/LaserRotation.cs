@@ -17,7 +17,7 @@ public class LaserRotation : MonoBehaviour
     // 레이저 회전 관련 변수들
     float angle;
     float stopAngle;
-    public bool check = true;
+    bool check = true;
     Vector2 target, mouse;
 
     public bool isFinish = true;
@@ -34,7 +34,7 @@ public class LaserRotation : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name.Equals("Game Scene"))
         {
-            if(GameObject.Find("RoomManager")!=null)
+            if (GameObject.Find("RoomManager") != null)
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == GameObject.Find("RoomManager").GetComponent<Room>().bossActorNum)
                 {
@@ -42,12 +42,12 @@ public class LaserRotation : MonoBehaviour
 
                     if (bulletBtn)
                     {
+                        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;
+
                         //마우스 클릭 시 레이저 각도 고정
                         if (Input.GetMouseButtonDown(0) && bulletBtn.num == 1 && check)
                         {
-                            mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                            angle = Mathf.Atan2(mouse.y - target.y, mouse.x - target.x) * Mathf.Rad2Deg;
-
                             pv.RPC("FixAngle", RpcTarget.All, angle);
                         }
                     }
@@ -68,8 +68,6 @@ public class LaserRotation : MonoBehaviour
     [PunRPC]
     public void FixAngle(float angle)
     {
-        check = false;
-        isFinish = false;
         stopAngle = angle;
         this.transform.rotation = Quaternion.AngleAxis(stopAngle - 90, Vector3.forward);
 
@@ -79,12 +77,13 @@ public class LaserRotation : MonoBehaviour
 
     IEnumerator Cooltime()
     {
+        check = false;
         //레이저 발동시간 내 카메라 흔들기 및 각도 고정
         while (true)
         {
             GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
 
-            if(isFinish)
+            if (isFinish)
             {
                 GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
                 isFinish = false;
@@ -93,5 +92,6 @@ public class LaserRotation : MonoBehaviour
             }
             yield return null;
         }
+        check = true;
     }
 }

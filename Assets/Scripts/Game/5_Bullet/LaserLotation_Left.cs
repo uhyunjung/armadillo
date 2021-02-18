@@ -7,7 +7,7 @@ using Photon.Pun;
 public class LaserLotation_Left : MonoBehaviour
 {
     BulletBtn bulletBtn;  // 탄막 버튼 스크립트
-    public PhotonView pv;
+    public PhotonView pv, pv1, pv2, pv3;
     SpriteRenderer spr;
 
     // 레이저 회전 관련 변수들
@@ -45,7 +45,20 @@ public class LaserLotation_Left : MonoBehaviour
                         //마우스 클릭 시 레이저 각도 고정
                         if (Input.GetMouseButtonDown(0) && bulletBtn.num == 4 && check )
                         {
+                            isFinish = false;
                             pv.RPC("FixAngle", RpcTarget.All, angle);
+                            if(pv1 != null)
+                            {
+                                pv1.RPC("checkPosition", RpcTarget.All, mouse, angle);
+                            }
+                            if(pv2 != null)
+                            {
+                                pv2.RPC("checkPosition", RpcTarget.All, mouse, angle);
+                            }
+                            if(pv3 != null)
+                            {
+                                pv3.RPC("checkPosition", RpcTarget.All, mouse, angle);
+                            }
                         }
                     }
                 }
@@ -65,10 +78,14 @@ public class LaserLotation_Left : MonoBehaviour
     [PunRPC]
     public void FixAngle(float angle)
     {
+        check = false;
         stopAngle = angle;
         if (this.tag == "Laser_up")
         {
             this.transform.rotation = Quaternion.AngleAxis(stopAngle - 60, Vector3.forward);
+
+            //코루틴 호출 함수
+            StartCoroutine(Cooltime());
         }
         else if (this.tag == "Laser_center")
         {
@@ -78,22 +95,19 @@ public class LaserLotation_Left : MonoBehaviour
         {
             this.transform.rotation = Quaternion.AngleAxis(stopAngle - 120, Vector3.forward);
         }
-
-        //코루틴 호출 함수
-        StartCoroutine(Cooltime());
+        check = true;
     }
 
     IEnumerator Cooltime()
     {
-        check = false;
         //레이저 발동시간 내 카메라 흔들기 및 각도 고정
         while (true)
         {
-            GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
+            pv.RPC("shake", RpcTarget.All);
 
             if (isFinish)
             {
-                GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
+                pv.RPC("reset", RpcTarget.All);
                 isFinish = false;
                 check = true;
                 break;
@@ -101,5 +115,17 @@ public class LaserLotation_Left : MonoBehaviour
             yield return null;
         }
         check = true;
+    }
+
+    [PunRPC]
+    void shake()
+    {
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().Shake();
+    }
+
+    [PunRPC]
+    void reset()
+    {
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().cameraReset();
     }
 }
