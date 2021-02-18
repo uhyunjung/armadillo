@@ -1445,7 +1445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 240282243}
-  pvLaser: {fileID: 1870571516}
+  pvLaser: {fileID: 240282243}
   check: 1
 --- !u!212 &240282245
 SpriteRenderer:
@@ -1532,7 +1532,7 @@ MonoBehaviour:
   soundwave_center: {fileID: 1548916560}
   soundwave_up: {fileID: 463294778}
   soundwave_down: {fileID: 1480468018}
-  pv: {fileID: 326666399}
+  pv: {fileID: 363311571}
 --- !u!212 &272810117
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2032,7 +2032,7 @@ MonoBehaviour:
   soundwave_center: {fileID: 1304824940}
   soundwave_up: {fileID: 549525150}
   soundwave_down: {fileID: 1298855636}
-  pv: {fileID: 0}
+  pv: {fileID: 363311571}
 --- !u!114 &363311571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2776,7 +2776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionNum: 1
   power: 60
-  pv: {fileID: 0}
+  pv: {fileID: 463294784}
 --- !u!212 &463294783
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3051,7 +3051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionNum: 1
   power: 60
-  pv: {fileID: 0}
+  pv: {fileID: 549525156}
 --- !u!60 &549525153
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6151,7 +6151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionNum: 2
   power: 60
-  pv: {fileID: 0}
+  pv: {fileID: 1298855642}
 --- !u!60 &1298855639
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6743,7 +6743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionNum: 0
   power: 60
-  pv: {fileID: 0}
+  pv: {fileID: 1304824946}
 --- !u!212 &1304824945
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7159,7 +7159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1332420861}
-  pvLaser: {fileID: 1870571516}
+  pvLaser: {fileID: 1332420861}
   check: 1
 --- !u!212 &1332420863
 SpriteRenderer:
@@ -7454,7 +7454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 1400461105}
-  pvLaser: {fileID: 1870571516}
+  pvLaser: {fileID: 1400461105}
   check: 1
 --- !u!212 &1400461107
 SpriteRenderer:
@@ -8160,7 +8160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionNum: 2
   power: 60
-  pv: {fileID: 0}
+  pv: {fileID: 1480468024}
 --- !u!212 &1480468023
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8549,7 +8549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionNum: 0
   power: 60
-  pv: {fileID: 0}
+  pv: {fileID: 1548916566}
 --- !u!212 &1548916565
 SpriteRenderer:
   m_ObjectHideFlags: 0
