@@ -12,7 +12,7 @@ public class StartManager : MonoBehaviour
 
     public void Start()
     {
-        Screen.SetResolution(1920, 1080, true);  // 1920 1080
+        Screen.SetResolution(1920, 1080, true);  // 1920 1080 false
     }
 
     // 로비 이동
