@@ -10,7 +10,7 @@
 1. [**기술 스택**](#2)
 1. [**주요 기능**](#3)
 1. [**프로젝트 구성도**](#4)
-1. [**데모 영상**](#5)
+1. [**발표 자료 및 데모 영상**](#5)
 1. [**팀원 소개**](#6)
 1. [**기간 및 일정**](#7)
 1. [**실행 방법**](#8)
@@ -39,7 +39,7 @@
 
 ## 📲 주요 기능
 
-| <div align="center"/>기능                      | <div align="center"/>내용                                                                                                                                |
+| <div align="center"/>기능                      | <div align="center"/>내용                                                  |
 | :------------------------ | :---------------------------------------------------------------------------------------------------------------------------------- |
 | <div align="center"/>메인메뉴|- 게임시작, 환경설정, 게임종료 버튼 클릭시 해당 씬으로 이동한다|
 | <div align="center"/>로비|- Join 버튼 클릭 시 방 접속하고, 방 생성 버튼 클릭 시 방 이름을 입력하고 생성할 수 있다|
@@ -54,13 +54,16 @@
 ## 🗄️ 프로젝트 구성도
 | <div align="center"/>Architecture|                                                                                                                    
 | :------------------------ |
-| <div align="center"/><img src="https://user-images.githubusercontent.com/67186222/206713347-29f52f61-b7d2-4fe5-a0a7-880dba2d3a67.png" alt="architecture" width="800px" height="500px"/>
+| <div align="center"/><img src="https://user-images.githubusercontent.com/67186222/206713347-29f52f61-b7d2-4fe5-a0a7-880dba2d3a67.png" alt="architecture" width="900px" height="500px"/>
 <br />
 
 <div id="5"></div>
 
-## 📽️ 데모 영상
-🔗[**데모 영상 링크**](https://drive.google.com/file/d/1-N2kKMqFFt01A3FWLS_9gTOyygCBWHEI/view?usp=share_link)
+## 📽️ 발표 자료 및 데모 영상
+| <div align="center"/>시작 발표| <div align="center">개발 기획|<div align="center">최종 발표|<div align="center">데모 영상|
+| :------------------------ | :--------------------------- |:--------------------------- |:--------------------------- |
+|🔗[**시작 발표**](https://drive.google.com/file/d/1uQV5LNFgAIRDjRnNyPYiePD6CSduXxhN/view?usp=share_link)|🔗[**개발 기획**](https://drive.google.com/file/d/13yBIzASY0htRY69fCoC9UsIBLlTZhsRf/view?usp=share_link)|🔗[**최종 발표**](https://drive.google.com/file/d/1hMR_WWvOSlnIcSozv6gDPZH3KE3tbG7P/view?usp=share_link)|🔗[**데모 영상**](https://drive.google.com/file/d/1-N2kKMqFFt01A3FWLS_9gTOyygCBWHEI/view?usp=share_link)|
+
 <br /><br />
 
 <div id="6"></div>
@@ -86,7 +89,7 @@
 
 ## 💡 실행 방법
 ### Client 환경
-> 발표자료에서 빌드파일 압축 해제 후, Armadillo develop.exe 실행
+> 🔗[**빌드 파일**](https://drive.google.com/file/d/1Vqvty0aNQF2-GvyHOxkD5uo9hHC7ovw1/view?usp=sharing) 압축 해제 후, Armadillo develop.exe 실행
 
 ### 개발환경
 **1. 원격 저장소 복제**
