@@ -119,21 +119,21 @@ armadillo
 │   ├── Scenes/Game Scene, Lobby Scene, Room Scene, Setting Scene, Start Scene        - 게임, 로비, 룸, 설정, 시작 씬
 │   └── Scripts/
 │       ├── Game/
-│       │    ├──1_Bullet/                                                             - 1번 탄막 원형 탄막
+│       │    ├── 1_Bullet/                                                             - 1번 탄막 원형 탄막
 │       │    │   └── CircleFire, CircleMouse, Circle/move
-│       │    ├──2_Bullet/                                                             - 2번 탄막 스탠드 조명 탄막
+│       │    ├── 2_Bullet/                                                             - 2번 탄막 스탠드 조명 탄막
 │       │    │   └── ArmManager, LserOn, LaserRotation, SLRange
-│       │    ├──3_Bullet/                                                             - 3번 탄막 카메라 흔들기
+│       │    ├── 3_Bullet/                                                             - 3번 탄막 카메라 흔들기
 │       │    │    └── CameraShake, TimeSpeed
-│       │    ├──4_Bullet/                                                             - 4번 탄막 무대용 조명 탄막
+│       │    ├── 4_Bullet/                                                             - 4번 탄막 무대용 조명 탄막
 │       │    │    └── FlashRange, SLRotate, StageLight, TotalSLRange
-│       │    ├──5_Bullet/                                                             - 5번 탄막 확성기 탄막
+│       │    ├── 5_Bullet/                                                             - 5번 탄막 확성기 탄막
 │       │    │    ├── Left/
 │       │    │    │    └── LeftSpeaker, SLRange_Left, WaveMaker
 │       │    │    ├── Right/
 │       │    │    │    └── RightSpeaker, SLRange_right, WaveMaker_R
 │       │    │    └── LaserLotation_Left
-│       │    ├──6_Bullet/                                                             - 6번 탄막 스피커 탄막
+│       │    ├── 6_Bullet/                                                             - 6번 탄막 스피커 탄막
 │       │    │   └── left_move, right_move
 │       │    └── BulletBtn, Controller_Time, DashMove, GameOverManager, TimeManager
 │       ├── Lobby/                                                                    - 로비
