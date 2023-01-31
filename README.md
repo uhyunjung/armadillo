@@ -120,7 +120,7 @@ armadillo
 │   └── Scripts/
 │       ├── Game/
 │       │    ├── 1_Bullet/                                                             - 1번 탄막 원형 탄막
-│       │    │   └── CircleFire, CircleMouse, Circle/move
+│       │    │   └── CircleFire, CircleMouse, CircleMove
 │       │    ├── 2_Bullet/                                                             - 2번 탄막 스탠드 조명 탄막
 │       │    │   └── ArmManager, LserOn, LaserRotation, SLRange
 │       │    ├── 3_Bullet/                                                             - 3번 탄막 카메라 흔들기
